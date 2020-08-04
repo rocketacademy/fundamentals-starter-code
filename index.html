@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Basic Javascript Starter Code Template</title>
+        <style>
+            #container{
+              margin:20px;
+              padding:20px;
+              background-color:pink;
+              max-width:200px;
+            }
+
+            button{
+              margin:6px;
+            }
+
+            input{
+              margin:6px;
+
+            }
+
+            #output{
+              margin:20px;
+              padding:20px;
+              background-color:grey;
+              max-width:200px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Basic Javascript Starter Code Template</h1>
+        <div id="container">
+            <input id="my-input"/>
+            <button id="my-button">submit</button>
+            <p>output:</p>
+            <div id="output">
+            </div>
+        </div>
+        <script src="script.js"></script>
+        <script>
+            var button = document.querySelector('#my-button');
+
+            button.addEventListener('click', function(){
+
+              var input = document.querySelector('#my-input');
+
+              var result = main(input.value);
+
+              var output = document.querySelector('#output');
+
+              output.innerHTML = result;
+
+              input.value = "";
+            });
+
+        </script>
+    </body>
+</html>
