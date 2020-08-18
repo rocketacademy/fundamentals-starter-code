@@ -27,5 +27,8 @@ module.exports = {
     'operator-assignment': 'off',
     // Disable func-names rule so that we can have anonymous functions
     'func-names': 'off',
+    // Disable linebreak style to prevent ESLint errors on Windows line endings
+    // https://eslint.org/docs/rules/linebreak-style
+    'linebreak-style': 'off',
   },
 };
