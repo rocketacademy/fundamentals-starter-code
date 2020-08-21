@@ -8,13 +8,10 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 11,
-    sourceType: 'module',
   },
   rules: {
     // Allow console for students to debug
     'no-console': 'off',
-    // TODO(akira): Please clarify why we have this
-    'no-restricted-globals': 'off',
     // Don't require vars to be declared at the top
     'vars-on-top': 'off',
     // Enable var instead of just let and const
@@ -30,5 +27,9 @@ module.exports = {
     // Disable linebreak style to prevent ESLint errors on Windows line endings
     // https://eslint.org/docs/rules/linebreak-style
     'linebreak-style': 'off',
+    // Disable radix requirement for functions like parseInt
+    radix: 'off',
+    // Do not complain about unused main function
+    'no-unused-vars': ['error', { varsIgnorePattern: 'main' }],
   },
 };
