@@ -19,6 +19,8 @@ module.exports = {
     'linebreak-style': 'off',
     // Allow console for students to debug
     'no-console': 'off',
+    // Allow function param reassign for object properties
+    'no-param-reassign': ['error', { props: false }],
     // Do not complain about unused main function
     'no-unused-vars': ['error', { varsIgnorePattern: 'main' }],
     // Enable var instead of just let and const
