@@ -1,0 +1,11 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "eslint.codeAction.showDocumentation": {
+
+        "enable": true
+    },
+    "eslint.format.enable": true,
+    "eslint.lintTask.enable": true,
+    "eslint.migration.2_x": "off"
+}
