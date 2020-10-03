@@ -10,6 +10,9 @@ module.exports = {
     ecmaVersion: 11,
   },
   rules: {
+    // Don't enforce control flow closing curly brace needs to be
+    // on same line as next control flow opening statement
+    'brace-style': 'off',
     // Don't enforce ===
     eqeqeq: 'off',
     // Disable func-names rule so that we can have anonymous functions
