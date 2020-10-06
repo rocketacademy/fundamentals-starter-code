@@ -30,6 +30,8 @@ module.exports = {
     'no-var': 'off',
     // Don't require a += b instead of a = a + b
     'operator-assignment': 'off',
+    // Don't require array and object destructuring for variable assignment
+    'prefer-destructuring': 'off',
     // Enable + sign to concatenate strings
     'prefer-template': 'off',
     // Disable radix requirement for functions like parseInt
