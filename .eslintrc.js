@@ -10,6 +10,8 @@ module.exports = {
     ecmaVersion: 11,
   },
   rules: {
+    // Don't enforce block scope on "var" variable declarations, let JS behave as intended.
+    'block-scoped-var': 'off',
     // Don't enforce control flow closing curly brace needs to be
     // on same line as next control flow opening statement
     'brace-style': 'off',
