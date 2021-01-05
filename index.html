@@ -1,82 +1,79 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>SWE101</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-<head>
-  <title>SWE101</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+      body {
+        font-family: sans-serif;
+        margin-left: 30px;
+        margin-right: 30px;
+      }
 
-    body{
-      font-family: sans-serif;
-      margin-left:30px;
-      margin-right:30px;
-    }
+      #header {
+        text-align: center;
+      }
 
-    #header {
-      text-align: center;
-    }
+      #container {
+        margin: 40px auto;
+        padding: 38px 31px;
+        background-color: pink;
+        max-width: 800px;
+      }
 
-    #container {
-      margin: 40px auto;
-      padding: 38px 31px;
-      background-color: pink;
-      max-width: 800px;
-    }
+      input {
+        width: 70%;
+        margin: 0 4px 23px 0;
+        padding: 5px 9px;
+        font-size: 21px;
+        line-height: 33px;
+      }
 
-    input {
-      width: 70%;
-      margin: 0 4px 23px 0;
-      padding: 5px 9px;
-      font-size:21px;
-      line-height:33px;
-    }
+      button {
+        padding: 5px 6px;
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0px 23px 0;
+        width: 25%;
+      }
 
-    button {
-      padding: 5px 6px;
-      font-size:21px;
-      line-height:33px;
-      margin: 0 0px 23px 0;
-      width: 25%;
-    }
+      #output {
+        margin: 20px auto;
+        padding: 20px;
+        background-color: silver;
+        width: 100%;
+      }
+    </style>
+  </head>
 
-    #output {
-      margin: 20px auto;
-      padding: 20px;
-      background-color: silver;
-      width: 100%;
-    }
-  </style>
-</head>
-
-<body>
-  <h1 id="header">SWE101! 🚀</h1>
-  <div id="container">
-    <input id="my-input" />
-    <button id="my-button">Submit</button>
-    <p>Output:</p>
-    <div id="output">
+  <body>
+    <h1 id="header">SWE101! 🚀</h1>
+    <div id="container">
+      <input id="my-input" />
+      <button id="my-button">Submit</button>
+      <p>Output:</p>
+      <div id="output"></div>
     </div>
-  </div>
-  <!-- Import program logic -->
-  <script src="script.js"></script>
-  <!-- Define button click functionality -->
-  <script>
-    var button = document.querySelector('#my-button');
-    button.addEventListener('click', function () {
-      // Set result to input value
-      var input = document.querySelector('#my-input');
-      var result = main(input.value);
+    <!-- Import program logic -->
+    <script src="script.js"></script>
+    <!-- Define button click functionality -->
+    <script>
+      var button = document.querySelector("#my-button");
+      button.addEventListener("click", function () {
+        // Set result to input value
+        var input = document.querySelector("#my-input");
+        var result = main(input.value);
 
-      // Display result in output element
-      var output = document.querySelector('#output');
-      output.innerHTML = result;
+        // Display result in output element
+        var output = document.querySelector("#output");
+        output.innerHTML = result;
 
-      // Reset input value
-      input.value = "";
-    });
-  </script>
-</body>
-
+        // Reset input value
+        input.value = "";
+      });
+    </script>
+  </body>
 </html>
