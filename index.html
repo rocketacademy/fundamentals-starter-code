@@ -18,32 +18,31 @@
       }
 
       #container {
+        background-color: #f9f6e7;
         margin: 40px auto;
-        padding: 38px 31px;
-        background-color: pink;
         max-width: 800px;
+        padding: 38px 31px;
       }
 
       input {
-        width: 70%;
-        margin: 0 4px 23px 0;
-        padding: 5px 9px;
         font-size: 21px;
         line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 9px;
+        width: 74%;
       }
 
       button {
-        padding: 5px 6px;
         font-size: 21px;
         line-height: 33px;
-        margin: 0 0px 23px 0;
+        margin: 0 0 23px 0;
+        padding: 0 6px;
         width: 25%;
       }
 
       #output {
         margin: 20px auto;
-        padding: 20px;
-        background-color: silver;
+        padding: 20px 0px;
         width: 100%;
       }
     </style>
@@ -52,23 +51,24 @@
   <body>
     <h1 id="header">SWE101! 🚀</h1>
     <div id="container">
-      <input id="my-input" />
-      <button id="my-button">Submit</button>
+      <p>Input:</p>
+      <input id="input-field" />
+      <button id="submit-button">Submit</button>
       <p>Output:</p>
-      <div id="output"></div>
+      <div id="output-div"></div>
     </div>
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
-      var button = document.querySelector("#my-button");
+      var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
         // Set result to input value
-        var input = document.querySelector("#my-input");
+        var input = document.querySelector("#input-field");
         var result = main(input.value);
 
         // Display result in output element
-        var output = document.querySelector("#output");
+        var output = document.querySelector("#output-div");
         output.innerHTML = result;
 
         // Reset input value
