@@ -109,9 +109,7 @@ var main = function (numHoursUsingAircon) {
 //   var totalPaybackAmt = calcTotalPaybackAmt(loanAmount, loanDurationInYears);
 //   var totalInterestAmt = totalPaybackAmt - loanAmount;
 //   var monthlyPaymentAmt = calcMonthlyPaymentAmt(totalPaybackAmt, loanDurationInYears);
-//   return `For a mortgage loan of $${loanAmount}, the customer would pay back a total of $${totalPaybackAmt} over 10 years.
-
-//   The customer would pay a total of $${totalInterestAmt} in interest.
-
-//   The customer would pay a $${monthlyPaymentAmt} over the loan duration.`;
+//   return `For a mortgage loan of $${loanAmount}, the customer would pay back a total of $${totalPaybackAmt} over 10 years. \n
+//     The customer would pay a total of $${totalInterestAmt} in interest. \n
+//     The customer would pay a $${monthlyPaymentAmt} over the loan duration.`;
 // };
