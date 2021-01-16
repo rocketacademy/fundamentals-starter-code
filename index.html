@@ -52,23 +52,23 @@
     <h1 id="header">SWE101! 🚀</h1>
     <div id="container">
       <p>Input:</p>
-      <input id="my-input" />
-      <button id="my-button">Submit</button>
+      <input id="input-field" />
+      <button id="submit-button">Submit</button>
       <p>Output:</p>
-      <div id="output"></div>
+      <div id="output-div"></div>
     </div>
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
-      var button = document.querySelector("#my-button");
+      var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
         // Set result to input value
-        var input = document.querySelector("#my-input");
+        var input = document.querySelector("#input-field");
         var result = main(input.value);
 
         // Display result in output element
-        var output = document.querySelector("#output");
+        var output = document.querySelector("#output-div");
         output.innerHTML = result;
 
         // Reset input value
