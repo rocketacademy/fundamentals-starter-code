@@ -11,7 +11,7 @@ var main = function (numWeeks) {
   var hoursPerDay = 24;
   var minutesPerHour = 60;
   var numMinutes = numWeeks * daysPerWeek * hoursPerDay * minutesPerHour;
-  return `In ${numWeeks} weeks there are ${numMinutes} minutes! Wow!`;
+  return 'In ' + numWeeks + ' weeks there are ' + numMinutes + ' minutes! Wow!';
 };
 
 // Fahrenheit to Celsius
@@ -27,6 +27,7 @@ var main = function (numWeeks) {
 //   var costPerLitreOfPetrol = 2.2;
 //   var costEstimate = numLitresOfPetrolNeeded * costPerLitreOfPetrol;
 //   // .toFixed(2) limits the number of decimal places to 2.
+//   // You may find it easier to use JavaScript template literals to create strings instead of the + operator.
 //   return `It would cost $${costEstimate.toFixed(2)} to drive your Ferrari ${tripLengthInKm} kilometres.`;
 // };
 
