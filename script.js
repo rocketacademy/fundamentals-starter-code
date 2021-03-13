@@ -258,8 +258,7 @@ var twoPlayerMultiRoundMultiDiceGame = function (input) {
   var nextPlayer = (currPlayer % 2) + 1;
   // .join converts an array to a string where each element is separated by the param to .join.
   var outputValue = `
-    Player ${currPlayer}: <br/><br/>
-    You guessed ${userGuess} and the computer rolled ${diceRollsForEachRound.join(' | ')}. <br/><br/>
+    Player ${currPlayer}: You guessed ${userGuess} and the computer rolled ${diceRollsForEachRound.join(' | ')}. <br/><br/>
     Player 1 win-loss record is ${player1NumWins}-${player1NumLosses}. <br/><br/>
     Player 2 win-loss record is ${player2NumWins}-${player2NumLosses}. <br/><br/>
     Player ${nextPlayer}: Please enter a number of dice to roll for your turn.
@@ -269,6 +268,130 @@ var twoPlayerMultiRoundMultiDiceGame = function (input) {
   currPlayer = nextPlayer;
 
   return outputValue;
+};
+
+/**
+ * Multi-Player Multi-Round Multi-Dice Game
+ */
+// Introduce new game mode, choose num players
+var GAME_MODE_ENTER_NUM_PLAYERS = 'ENTER_NUM_PLAYERS';
+// Name the game mode variable multiPlayerGameMode to deconflict with gameMode variable above
+var multiPlayerGameMode = GAME_MODE_ENTER_NUM_PLAYERS;
+// Introduce new global that stores number of players playing
+var numPlayers;
+// Keep track of all players' win-loss records in arrays
+var numRoundsPlayedByEachPlayer = [];
+var numWinsOfEachPlayer = [];
+
+// Give this function a different name from 2-player multi-dice game to deconflict
+var incrementNumRoundsPlayedByCurrPlayer = function () {
+  var currPlayerIndex = currPlayer - 1;
+  numRoundsPlayedByEachPlayer[currPlayerIndex] += 1;
+};
+
+// Give this function a different name from 2-player multi-dice game to deconflict
+var incrementNumWinsOfCurrPlayer = function () {
+  var currPlayerIndex = currPlayer - 1;
+  numWinsOfEachPlayer[currPlayerIndex] += 1;
+};
+
+// Output current player's result and all players' win-loss records.
+var generateOutputMessage = function (userGuess, diceRollsForCurrRound, nextPlayer) {
+  var playerWinLossRecordsOutput = '';
+  var playerCounter = 0;
+  while (playerCounter < numPlayers) {
+    // Create a string with all players' win loss record
+    var playerNum = playerCounter + 1;
+    var playerNumWins = numWinsOfEachPlayer[playerCounter];
+    var playerNumLosses = numRoundsPlayedByEachPlayer[playerCounter] - playerNumWins;
+    // Add the current player's win-loss record to the output string
+    playerWinLossRecordsOutput += `Player ${playerNum} win-loss record is ${playerNumWins}-${playerNumLosses}. <br/><br/>`;
+    // Move on to next player
+    playerCounter += 1;
+  }
+  // .join converts an array to a string where each element is separated by the param to .join.
+  return `
+    Player ${currPlayer}: You guessed ${userGuess} and the computer rolled ${diceRollsForCurrRound.join(' | ')}. <br/><br/>
+    ${playerWinLossRecordsOutput}
+    Player ${nextPlayer}: Please enter a number of dice to roll for your turn.
+  `;
+};
+
+var multiPlayerMultiRoundMultiDiceGame = function (input) {
+  // This game mode only appears once at the beginning of the game.
+  if (multiPlayerGameMode == GAME_MODE_ENTER_NUM_PLAYERS) {
+    // Save input as numPlayers
+    numPlayers = Number(input);
+    // Initialise numRoundsPlayerByEachPlayer to empty array of length numPlayers with values of 0
+    numRoundsPlayedByEachPlayer = Array(numPlayers).fill(0);
+    // Initialise numWinsOfEachPlayer to empty array of length numPlayers with values of 0
+    numWinsOfEachPlayer = Array(numPlayers).fill(0);
+    // Change game mode to enter num dice
+    multiPlayerGameMode = GAME_MODE_ENTER_NUM_DICE;
+    return `
+      You have chosen to play with ${numPlayers} players. <br/><br/>
+      Player ${currPlayer}: Please enter the number of dice you want to roll.
+    `;
+  }
+
+  if (multiPlayerGameMode == GAME_MODE_ENTER_NUM_DICE) {
+    // Save input as numDice
+    numDice = Number(input);
+    // Change game mode to enter guess
+    multiPlayerGameMode = GAME_MODE_ENTER_GUESS;
+    return `Player ${currPlayer}: You have chosen to roll ${numDice} dice. Please enter a single guess for all of these dice.`;
+  }
+
+  // The following code assumes ENTER_GUESS game mode
+  // because we return at the end of the previous if statement
+  var userGuess = Number(input);
+
+  // Store all dice rolls for each round so user can see how they won or lost.
+  var diceRollsForEachRound = [];
+
+  // Play numRounds rounds with a fixed number of dice and a fixed user guess
+  var roundCounter = 0;
+  var numRounds = 4;
+  while (roundCounter < numRounds) {
+    // Initialise diceRolls array to store dice rolls for this round
+    diceRolls = [];
+    // Initialise hasUserWon to false for this round
+    hasUserWon = false;
+    // Increment number of rounds the user has played for win loss record
+    incrementNumRoundsPlayedByCurrPlayer();
+
+    // Roll numDice number of dice
+    var diceCounter = 0;
+    while (diceCounter < numDice) {
+      var diceRoll = rollDice();
+      // Store the current dice roll in diceRolls to show the user later
+      diceRolls.push(diceRoll);
+      // If dice roll matches user guess, store that user has won.
+      if (diceRoll == userGuess) {
+        hasUserWon = true;
+      }
+      diceCounter += 1;
+    }
+
+    // Push the populated dice rolls array into the dice rolls for each round array
+    diceRollsForEachRound.push(diceRolls);
+    // Increment win counter if user has won
+    if (hasUserWon) {
+      incrementNumWinsOfCurrPlayer();
+    }
+    roundCounter += 1;
+  }
+
+  // After numRounds, reset mode to enter num dice for next player's turn
+  multiPlayerGameMode = GAME_MODE_ENTER_NUM_DICE;
+  // Next player is the current player + 1, or 1 if current player is the last player.
+  var nextPlayer = (currPlayer % numPlayers) + 1;
+  // Generate output message based on current game state
+  var outputMessage = generateOutputMessage(userGuess, diceRollsForEachRound, nextPlayer);
+  // Update currPlayer to nextPlayer before next turn
+  currPlayer = nextPlayer;
+  // Display output message to players
+  return outputMessage;
 };
 
 /**
@@ -285,4 +408,5 @@ var main = function (input) {
   // return multiDiceGame(input);
   // return multiRoundMultiDiceGame(input);
   // return twoPlayerMultiRoundMultiDiceGame(input);
+  // return multiPlayerMultiRoundMultiDiceGame(input);
 };
