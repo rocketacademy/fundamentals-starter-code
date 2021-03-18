@@ -69,6 +69,142 @@ var madLibsAdjectives = function (input) {
 };
 
 /**
+ * Mad Libs Multiple Word Types
+ */
+
+// Store a global wordType variable to determine what word type gets inputted in input mode
+var currWordType = 'exclamations';
+
+// Store different word types in their own global array
+var exclamations = [];
+var adverbs = [];
+var nouns = [];
+
+// Create a feedback message for user input
+var generateInputPrompt = function (nextWordType) {
+  return `
+    Our list of exclamations is ${exclamations} <br/><br/>
+    Our list of adverbs is ${adverbs} <br/><br/>
+    Our list of nouns is ${nouns} <br/><br/>
+    Our list of adjectives is ${adjs} <br/><br/>
+    Please input ${nextWordType} separated by commas to fill in our Mad Lib. <br/><br/>
+    If you have input words for each word type, type "create" to enter create mode to generate complete Mad Libs.
+  `;
+};
+
+// Convert user input into an array of words
+var parseInputWords = function (inputString) {
+  // Assume inputString is a string of words separated by comma
+  // return value is an array of each substring separated by a comma in inputString
+  return inputString.split(',');
+};
+
+// Store the user-inputted adjectives in the relevant global word array
+var storeInputWords = function (inputWords) {
+  // Initialise empty variable as placeholder for the word array we wish to add to
+  var wordArray;
+  // Define wordArray to be the relevant array depending on the current input word type
+  if (currWordType == 'exclamations') {
+    wordArray = exclamations;
+  } else if (currWordType == 'adverbs') {
+    wordArray = adverbs;
+  } else if (currWordType == 'nouns') {
+    wordArray = nouns;
+  }
+  // This assumes anything not any of the word types above is an adjective
+  else {
+    wordArray = adjs;
+  }
+  // Add all input words to the relevant word array
+  // We could also accomplish this in fewer lines with JS' array concat() method
+  // https://www.w3schools.com/jsref/jsref_concat_array.asp
+  var counter = 0;
+  while (counter < inputWords.length) {
+    wordArray.push(inputWords[counter]);
+    counter = counter + 1;
+  }
+};
+
+// Get the next word type that the user should input
+// Our hard-coded order is exclamations > adverbs > nouns > adjectives
+var getNextWordType = function () {
+  if (currWordType == 'exclamations') {
+    return 'adverbs';
+  }
+  if (currWordType == 'adverbs') {
+    return 'nouns';
+  }
+  if (currWordType == 'nouns') {
+    return 'adjectives';
+  }
+  return 'exclamations';
+};
+
+// Return a random element in the given array
+var getRandomElemInArray = function (arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
+
+var completeMadLibMultipleWords = function () {
+  // Get a random word from each word type
+  var randomExc = getRandomElemInArray(exclamations);
+  var randomAdverb = getRandomElemInArray(adverbs);
+  var randomNoun = getRandomElemInArray(nouns);
+  var randomAdj = getRandomElemInArray(adjs);
+  // Return the completed Mad Lib
+  return `
+    "${randomExc}!" he said ${randomAdverb} as he jumped into his convertible ${randomNoun} and drove off with his ${randomAdj} wife. <br/><br/>
+    Hit Submit to complete the Mad Lib again, or enter "input" to input more words.
+  `;
+};
+
+var madLibsMultipleWordTypes = function (input) {
+  if (input == 'input') {
+    mode = 'input';
+    // Show user list of adjectives when switching back to input mode
+    return `
+      You have switched to input mode. <br/><br/>
+      ${generateInputPrompt(currWordType)}
+    `;
+  }
+
+  if (input == 'create') {
+    mode = 'create';
+    return 'You have switched to create mode. Hit Submit to complete the Mad Lib.';
+  }
+
+  if (mode == 'input') {
+    // If input is empty, prompt user to input words
+    if (input == '') {
+      return `Please input ${currWordType} separated by commas to fill in our Mad Lib.`;
+    }
+
+    // Otherwise, save the user-inputted words for later
+    var inputWords = parseInputWords(input);
+    storeInputWords(inputWords);
+    // Notice the following logic. We generate the feedback message using currWordType,
+    // then set currWordType to nextWordType, then return the feedback message to the user.
+    var nextWordType = getNextWordType();
+    // Create feedback for the user on input
+    var feedbackMessage = `
+      You have added ${inputWords} to our list of ${currWordType}.<br/><br/>
+      ${generateInputPrompt(nextWordType)}
+    `;
+    // Cycle to the next word type for the next user input
+    currWordType = nextWordType;
+    return feedbackMessage;
+  }
+
+  if (mode == 'create') {
+    // When user Submits in create mode, return a completed Mad Lib with 1 of the stored adjectives.
+    return completeMadLibMultipleWords();
+  }
+
+  // If we reach this part of control flow, something went wrong
+  return 'Oops, something went wrong!';
+};
+
+/**
  * Instructions:
  * Each group of functions under a "/**" comment represents 1 exercise, and
  * each function in the following main function represents 1 exercise.
@@ -77,4 +213,5 @@ var madLibsAdjectives = function (input) {
  */
 var main = function (input) {
   return madLibsAdjectives(input);
+  // return madLibsMultipleWordTypes(input);
 };
