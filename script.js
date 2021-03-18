@@ -71,7 +71,6 @@ var madLibsAdjectives = function (input) {
 /**
  * Mad Libs Multiple Word Types
  */
-
 // Store a global wordType variable to determine what word type gets inputted in input mode
 var currWordType = 'exclamations';
 
@@ -99,7 +98,7 @@ var parseInputWords = function (inputString) {
   return inputString.split(',');
 };
 
-// Store the user-inputted adjectives in the relevant global word array
+// Store the user-inputted words in the relevant global word array
 var storeInputWords = function (inputWords) {
   // Initialise empty variable as placeholder for the word array we wish to add to
   var wordArray;
@@ -205,6 +204,148 @@ var madLibsMultipleWordTypes = function (input) {
 };
 
 /**
+ * Popular Mad Libs
+ */
+
+// Store word frequencies in parallel arrays to word arrays. Our program should keep the lengths
+// of corresponding arrays the same, e.g. exclamations has same length as exclamationsFrequencies
+var exclamationsFrequencies = [];
+var adverbsFrequencies = [];
+var nounsFrequencies = [];
+var adjectivesFrequencies = [];
+
+var generateInputPromptWithPopular = function (nextWordType) {
+  return `
+    ${generateInputPrompt(nextWordType)} <br/><br/>
+    You can also type "popular" to enter create mode with only the most popular words so far
+  `;
+};
+
+// Store the user-inputted words in the relevant global word array
+var storeInputWordsWithFrequency = function (inputWords) {
+  // Initialise empty variable as placeholder for the word array we wish to add to
+  var wordArray;
+  var wordFreqArray;
+  // Define wordArray to be the relevant array depending on the current input word type
+  if (currWordType == 'exclamations') {
+    wordArray = exclamations;
+    wordFreqArray = exclamationsFrequencies;
+  } else if (currWordType == 'adverbs') {
+    wordArray = adverbs;
+    wordFreqArray = adverbsFrequencies;
+  } else if (currWordType == 'nouns') {
+    wordArray = nouns;
+    wordFreqArray = nounsFrequencies;
+  }
+  // This assumes anything not any of the word types above is an adjective
+  else {
+    wordArray = adjs;
+    wordFreqArray = adjectivesFrequencies;
+  }
+  // Add all input words to the relevant word array
+  // We could also accomplish this in fewer lines with JS' array concat() method
+  // https://www.w3schools.com/jsref/jsref_concat_array.asp
+  var counter = 0;
+  while (counter < inputWords.length) {
+    wordArray.push(inputWords[counter]);
+    // For each new input word, add a 0 frequency for that word in wordFreqArray at the same index
+    wordFreqArray.push(0);
+    counter = counter + 1;
+  }
+};
+
+var getRandomElemInArrayAndIncrFreq = function (arr, freqArr) {
+  // Choose a random index in the word array
+  var randomIndex = Math.floor(Math.random() * arr.length);
+  // Increment frequency of element at chosen index
+  freqArr[randomIndex] += 1;
+  // Return the element at the random index
+  return arr[randomIndex];
+};
+
+var getPopularElemInArray = function (arr, freqArr) {
+  // Find the index of most frequent item in freqArr
+  // Indexes in freqArr correspond 1-1 to indexes in arr
+  var indexOfMostFrequentElem = freqArr.indexOf(Math.max(...freqArr));
+  return arr[indexOfMostFrequentElem];
+};
+
+var completeMadLibMultipleWordsWithModes = function (createMode) {
+  // If we are in normal create mode, return completed Mad Lib with random words
+  if (createMode == 'create') {
+    // Get a random word from each word type
+    var selectedExc = getRandomElemInArrayAndIncrFreq(exclamations, exclamationsFrequencies);
+    var selectedAdverb = getRandomElemInArrayAndIncrFreq(adverbs, adverbsFrequencies);
+    var selectedNoun = getRandomElemInArrayAndIncrFreq(nouns, nounsFrequencies);
+    var selectedAdj = getRandomElemInArrayAndIncrFreq(adjs, adjectivesFrequencies);
+  }
+  // Otherwise, if we are in create popular mode, get the most popular word from each word type
+  else {
+    selectedExc = getPopularElemInArray(exclamations, exclamationsFrequencies);
+    selectedAdverb = getPopularElemInArray(adverbs, adverbsFrequencies);
+    selectedNoun = getPopularElemInArray(nouns, nounsFrequencies);
+    selectedAdj = getPopularElemInArray(adjs, adjectivesFrequencies);
+  }
+  // Return the completed Mad Lib
+  return `
+    "${selectedExc}!" he said ${selectedAdverb} as he jumped into his convertible ${selectedNoun} and drove off with his ${selectedAdj} wife. <br/><br/>
+    Hit Submit to complete the Mad Lib again, enter "input" to input more words, "create" to create random Mad Libs, or "popular" to create the most popular Mad Lib.
+  `;
+};
+
+var popularMadLibs = function (input) {
+  if (input == 'input') {
+    mode = 'input';
+    // Show user list of adjectives when switching back to input mode
+    return `
+      You have switched to input mode. <br/><br/>
+      ${generateInputPromptWithPopular(currWordType)}
+    `;
+  }
+
+  if (input == 'create') {
+    mode = 'create';
+    return 'You have switched to create mode. Hit Submit to complete the Mad Lib.';
+  }
+
+  // If user specifies popular mode, generate Mad Lib with most frequently chosen words so far.
+  if (input == 'popular') {
+    mode = 'createPopular';
+    return 'You have switched to create popular mode. Hit Submit to complete the Mad Lib.';
+  }
+
+  if (mode == 'input') {
+    // If input is empty, prompt user to input words
+    if (input == '') {
+      return `Please input ${currWordType} separated by commas to fill in our Mad Lib.`;
+    }
+
+    // Otherwise, save the user-inputted words for later
+    var inputWords = parseInputWords(input);
+    storeInputWordsWithFrequency(inputWords);
+    // Notice the following logic. We generate the feedback message using currWordType,
+    // then set currWordType to nextWordType, then return the feedback message to the user.
+    var nextWordType = getNextWordType();
+    // Create feedback for the user on input
+    var feedbackMessage = `
+      You have added ${inputWords} to our list of ${currWordType}.<br/><br/>
+      ${generateInputPromptWithPopular(nextWordType)}
+    `;
+    // Cycle to the next word type for the next user input
+    currWordType = nextWordType;
+    return feedbackMessage;
+  }
+
+  if (mode.startsWith('create')) {
+    // When user Submits in create mode, return a completed Mad Lib with 1 of the stored adjectives.
+    return completeMadLibMultipleWordsWithModes(mode);
+  }
+
+  // If we reach this part of control flow, something went wrong
+  return 'Oops, something went wrong!';
+};
+
+/**
  * Instructions:
  * Each group of functions under a "/**" comment represents 1 exercise, and
  * each function in the following main function represents 1 exercise.
@@ -212,6 +353,7 @@ var madLibsMultipleWordTypes = function (input) {
  * execute the code for the relevant exercise.
  */
 var main = function (input) {
-  return madLibsAdjectives(input);
+  // return madLibsAdjectives(input);
   // return madLibsMultipleWordTypes(input);
+  return popularMadLibs(input);
 };
