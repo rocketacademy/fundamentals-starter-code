@@ -32,7 +32,7 @@ var completeMadLib = function () {
   // Obtain the random adjective from the array
   var randomAdj = adjs[randomAdjIndex];
   // Return the completed Mad Lib
-  return `"Yabadabadoo!" he said joyfully as he jumped into his convertible Tree Car and drove off with his ${randomAdj} wife.`;
+  return `"Yabadabadoo!" he said gleefully as he jumped into his convertible Tree Car and drove off with his ${randomAdj} wife.`;
 };
 
 var madLibsAdjectives = function (input) {
