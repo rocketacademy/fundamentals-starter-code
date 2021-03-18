@@ -346,6 +346,92 @@ var popularMadLibs = function (input) {
 };
 
 /**
+ * Sets of Mad Libs
+ */
+var completeRandomMadLibMultipleWordsWithModes = function (createMode) {
+  // If we are in normal create mode, return completed Mad Lib with random words
+  if (createMode == 'create') {
+    // Get a random word from each word type
+    var selectedExc = getRandomElemInArrayAndIncrFreq(exclamations, exclamationsFrequencies);
+    var selectedAdverb = getRandomElemInArrayAndIncrFreq(adverbs, adverbsFrequencies);
+    var selectedNoun = getRandomElemInArrayAndIncrFreq(nouns, nounsFrequencies);
+    var selectedAdj = getRandomElemInArrayAndIncrFreq(adjs, adjectivesFrequencies);
+  }
+  // Otherwise, if we are in create popular mode, get the most popular word from each word type
+  else {
+    selectedExc = getPopularElemInArray(exclamations, exclamationsFrequencies);
+    selectedAdverb = getPopularElemInArray(adverbs, adverbsFrequencies);
+    selectedNoun = getPopularElemInArray(nouns, nounsFrequencies);
+    selectedAdj = getPopularElemInArray(adjs, adjectivesFrequencies);
+  }
+  // Select a random Mad Lib
+  var madLibs = [
+    `"${selectedExc}!" he said ${selectedAdverb} as he jumped into his convertible ${selectedNoun} and drove off with his ${selectedAdj} wife.`,
+    `She asked ${selectedAdverb} for the ${selectedNoun} and when they were rude, she said ${selectedExc} and hung up the ${selectedAdj} phone.`,
+  ];
+  var randomMadLibIndex = Math.floor(Math.random() * madLibs.length);
+  var selectedMadLib = madLibs[randomMadLibIndex];
+
+  // Return the completed Mad Lib
+  return `
+    ${selectedMadLib} <br/><br/>
+    Hit Submit to complete the Mad Lib again, enter "input" to input more words, "create" to create random Mad Libs, or "popular" to create the most popular Mad Lib.
+  `;
+};
+
+var setsOfMadLibs = function (input) {
+  if (input == 'input') {
+    mode = 'input';
+    // Show user list of adjectives when switching back to input mode
+    return `
+      You have switched to input mode. <br/><br/>
+      ${generateInputPromptWithPopular(currWordType)}
+    `;
+  }
+
+  if (input == 'create') {
+    mode = 'create';
+    return 'You have switched to create mode. Hit Submit to complete the Mad Lib.';
+  }
+
+  // If user specifies popular mode, generate Mad Lib with most frequently chosen words so far.
+  if (input == 'popular') {
+    mode = 'createPopular';
+    return 'You have switched to create popular mode. Hit Submit to complete the Mad Lib.';
+  }
+
+  if (mode == 'input') {
+    // If input is empty, prompt user to input words
+    if (input == '') {
+      return `Please input ${currWordType} separated by commas to fill in our Mad Lib.`;
+    }
+
+    // Otherwise, save the user-inputted words for later
+    var inputWords = parseInputWords(input);
+    storeInputWordsWithFrequency(inputWords);
+    // Notice the following logic. We generate the feedback message using currWordType,
+    // then set currWordType to nextWordType, then return the feedback message to the user.
+    var nextWordType = getNextWordType();
+    // Create feedback for the user on input
+    var feedbackMessage = `
+      You have added ${inputWords} to our list of ${currWordType}.<br/><br/>
+      ${generateInputPromptWithPopular(nextWordType)}
+    `;
+    // Cycle to the next word type for the next user input
+    currWordType = nextWordType;
+    return feedbackMessage;
+  }
+
+  if (mode.startsWith('create')) {
+    // When user Submits in create mode, return a completed Mad Lib with 1 of the stored adjectives.
+    return completeRandomMadLibMultipleWordsWithModes(mode);
+  }
+
+  // If we reach this part of control flow, something went wrong
+  return 'Oops, something went wrong!';
+};
+
+/**
  * Instructions:
  * Each group of functions under a "/**" comment represents 1 exercise, and
  * each function in the following main function represents 1 exercise.
@@ -353,7 +439,8 @@ var popularMadLibs = function (input) {
  * execute the code for the relevant exercise.
  */
 var main = function (input) {
-  // return madLibsAdjectives(input);
+  return madLibsAdjectives(input);
   // return madLibsMultipleWordTypes(input);
-  return popularMadLibs(input);
+  // return popularMadLibs(input);
+  // return setsOfMadLibs(input);
 };
