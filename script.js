@@ -211,6 +211,88 @@ var lowCardHands = function (input) {
 };
 
 /**
+ * Low Card Output
+ */
+// Convert the word representation of a suit into the suit's emoji
+var convertSuitWordToEmoji = function (suitWord) {
+  if (suitWord == 'spades') {
+    return '♠️';
+  }
+  if (suitWord == 'hearts') {
+    return '♥️';
+  }
+  if (suitWord == 'clubs') {
+    return '♣️';
+  }
+  if (suitWord == 'diamonds') {
+    return '♦️';
+  }
+  // If we reach here, we entered an invalid suit
+  return 'Invalid Suit!';
+};
+
+var getCardStringRepresentation = function (card) {
+  return `${card.name} of ${convertSuitWordToEmoji(card.suit)}`;
+};
+
+var printCardswithEmojiSuits = function (cards) {
+  var returnString = '';
+  // Iterate until cards.length - 1 so we can avoid the extra comma at the end of return string
+  for (var i = 0; i < cards.length - 1; i += 1) {
+    var currCard = cards[i];
+    returnString += `${getCardStringRepresentation(currCard)}, `;
+  }
+  var lastCard = cards[cards.length - 1];
+  returnString += getCardStringRepresentation(lastCard);
+  return returnString;
+};
+
+var lowCardSuitOutput = function (input) {
+  // Draw 1 card for the computer
+  var computerCard = shuffledCardDeck.pop();
+
+  // Draw numCardToDraw cards for the player, but only store the card with lowest rank.
+  var numCardsToDraw = Number(input);
+  // Initialise lowest player card rank to 1 above highest possible rank, so that
+  // the first card the player draws will replace this lowest rank.
+  var lowestPlayerCardRank = 14;
+  var playerCards = [];
+  for (var i = 0; i < numCardsToDraw; i += 1) {
+    var currPlayerCard = shuffledCardDeck.pop();
+    // Add the current card to the player's hand to display later
+    playerCards.push(currPlayerCard);
+    // If the current card is the lowest of the player's cards so far, mark it as the lowest card.
+    if (currPlayerCard.rank < lowestPlayerCardRank) {
+      lowestPlayerCardRank = currPlayerCard.rank;
+      var lowestPlayerCard = currPlayerCard;
+    }
+  }
+
+  // Construct an output string to communicate which cards were drawn
+  // Print all the cards the player drew, not just the lowest one.
+  var genericOutput = `
+    Computer had ${getCardStringRepresentation(computerCard)}. <br/><br/>
+    Player drew ${printCardswithEmojiSuits(playerCards)}. <br/><br/>
+    Player's lowest card was ${getCardStringRepresentation(lowestPlayerCard)}.
+  `;
+
+  // Compare computer and player cards by rank attribute
+  // If computer card rank is LESS than player card rank, computer wins
+  if (computerCard.rank < lowestPlayerCard.rank
+    || doesPlayer1HaveQueenAndPlayer2Not(computerCard, lowestPlayerCard)) {
+    // Add conditional-dependent text to the output string
+    return `${genericOutput} <br/><br/> Computer wins.`;
+  }
+  // Else if computer card rank is GREATER than player card rank, player wins
+  if (computerCard.rank > lowestPlayerCard.rank
+    || doesPlayer1HaveQueenAndPlayer2Not(lowestPlayerCard, computerCard)) {
+    return `${genericOutput} <br/><br/> Player wins!`;
+  }
+  // Otherwise (i.e. ranks are equal), it's a tie
+  return `${genericOutput} <br/><br/> It's a tie.`;
+};
+
+/**
  * Instructions:
  * Each group of functions under a "/**" comment represents 1 exercise, and
  * each function in the following main function represents 1 exercise.
@@ -218,8 +300,9 @@ var lowCardHands = function (input) {
  * execute the code for the relevant exercise.
  */
 var main = function (input) {
-  // return displaySingleCard();
+  return displaySingleCard();
   // return lowCard();
   // return lowCardWithQueenWinner();
-  return lowCardHands(input);
+  // return lowCardHands(input);
+  // return lowCardSuitOutput(input);
 };
