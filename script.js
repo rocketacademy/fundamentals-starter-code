@@ -121,8 +121,8 @@ var lowCard = function () {
 /**
  * Low Card with Queen Winner
  */
-var doesPlayer1HaveQueenAndPlayer2Not = function (player1Card, player2Card) {
-  return player1Card.rank == 12 && player2Card.rank != 12;
+var isCardQueen = function (card) {
+  return card.rank == 12;
 };
 
 var lowCardWithQueenWinner = function () {
@@ -134,15 +134,17 @@ var lowCardWithQueenWinner = function () {
   var genericOutput = `Computer had ${computerCard.name} of ${computerCard.suit}. Player had ${playerCard.name} of ${playerCard.suit}.`;
 
   // Compare computer and player cards by rank attribute
-  // If computer card rank is LESS than player card rank, computer wins
-  if (computerCard.rank < playerCard.rank
-    || doesPlayer1HaveQueenAndPlayer2Not(computerCard, playerCard)) {
+  // If computer card rank is LESS than player card rank and player card is not queen,
+  // OR computer card is queen, computer wins
+  if ((computerCard.rank < playerCard.rank && !isCardQueen(playerCard))
+    || isCardQueen(computerCard)) {
     // Add conditional-dependent text to the output string
     return `${genericOutput} Computer wins.`;
   }
-  // Else if computer card rank is GREATER than player card rank, player wins
+  // Else if computer card rank is GREATER than player card rank,
+  // OR player card is queen, player wins
   if (computerCard.rank > playerCard.rank
-    || doesPlayer1HaveQueenAndPlayer2Not(playerCard, computerCard)) {
+    || isCardQueen(playerCard)) {
     return `${genericOutput} Player wins!`;
   }
   // Otherwise (i.e. ranks are equal), it's a tie
@@ -165,7 +167,26 @@ var printCards = function (cards) {
   return returnString;
 };
 
+var getIsCardQueen = function (card) {
+  return card.rank == 12;
+};
+
+var getIsQueenInHand = function (hand) {
+  for (var i = 0; i < hand.length; i += 1) {
+    var currCard = hand[i];
+    if (currCard.rank == 12) {
+      return true;
+    }
+  }
+  return false;
+};
+
 var lowCardHands = function (input) {
+  // If input is empty, prompt user to enter a number of cards to draw
+  if (input == '') {
+    return 'Please enter a number of cards to draw.';
+  }
+
   // Draw 1 card for the computer
   var computerCard = shuffledCardDeck.pop();
 
@@ -194,20 +215,38 @@ var lowCardHands = function (input) {
     Player's lowest card was ${lowestPlayerCard.name} of ${lowestPlayerCard.suit}.
   `;
 
+  // Determine if 1 player has queen and the other doesn't
+  var computerHasQueen = getIsCardQueen(computerCard);
+  var playerHasQueen = getIsQueenInHand(playerCards);
+
+  // Add to output if 1 player has queen and the other doesn't
+  if (computerHasQueen && !playerHasQueen) {
+    genericOutput += '<br/><br/> Computer has queen and Player does not.';
+  } else if (playerHasQueen && !computerHasQueen) {
+    genericOutput += '<br/><br/> Player has queen and Computer does not.';
+  } else if (playerHasQueen && computerHasQueen) {
+    genericOutput += '<br/><br/> Both Player and Computer have queen.';
+  }
+
   // Compare computer and player cards by rank attribute
-  // If computer card rank is LESS than player card rank, computer wins
-  if (computerCard.rank < lowestPlayerCard.rank
-    || doesPlayer1HaveQueenAndPlayer2Not(computerCard, lowestPlayerCard)) {
+  // If computer card rank is EQUAL to lowest player card rank,
+  // OR both computer and player have queen, it's a tie
+  if (computerCard.rank == lowestPlayerCard.rank || (computerHasQueen && playerHasQueen)) {
+    return `${genericOutput} <br/><br/> It's a tie.`;
+  }
+  // If computer card rank is LESS than player card rank and player's hand does not have queen,
+  // OR computer card is queen, computer wins
+  if ((computerCard.rank < lowestPlayerCard.rank && !playerHasQueen) || computerHasQueen) {
     // Add conditional-dependent text to the output string
     return `${genericOutput} <br/><br/> Computer wins.`;
   }
-  // Else if computer card rank is GREATER than player card rank, player wins
-  if (computerCard.rank > lowestPlayerCard.rank
-    || doesPlayer1HaveQueenAndPlayer2Not(lowestPlayerCard, computerCard)) {
+  // Else if computer card rank is GREATER than player card rank,
+  // OR player's hand has queen, player wins
+  if (computerCard.rank > lowestPlayerCard.rank || playerHasQueen) {
     return `${genericOutput} <br/><br/> Player wins!`;
   }
-  // Otherwise (i.e. ranks are equal), it's a tie
-  return `${genericOutput} <br/><br/> It's a tie.`;
+  // If none of the above cases are true, we've reached an unexpected outcome
+  return `${genericOutput} <br/><br/> Unexpected outcome.`;
 };
 
 /**
@@ -248,6 +287,11 @@ var printCardswithEmojiSuits = function (cards) {
 };
 
 var lowCardSuitOutput = function (input) {
+  // If input is empty, prompt user to enter a number of cards to draw
+  if (input == '') {
+    return 'Please enter a number of cards to draw.';
+  }
+
   // Draw 1 card for the computer
   var computerCard = shuffledCardDeck.pop();
 
@@ -276,20 +320,38 @@ var lowCardSuitOutput = function (input) {
     Player's lowest card was ${getCardStringRepresentation(lowestPlayerCard)}.
   `;
 
+  // Determine if 1 player has queen and the other doesn't
+  var computerHasQueen = getIsCardQueen(computerCard);
+  var playerHasQueen = getIsQueenInHand(playerCards);
+
+  // Add to output if 1 player has queen and the other doesn't
+  if (computerHasQueen && !playerHasQueen) {
+    genericOutput += '<br/><br/> Computer has queen and Player does not.';
+  } else if (playerHasQueen && !computerHasQueen) {
+    genericOutput += '<br/><br/> Player has queen and Computer does not.';
+  } else if (playerHasQueen && computerHasQueen) {
+    genericOutput += '<br/><br/> Both Player and Computer have queen.';
+  }
+
   // Compare computer and player cards by rank attribute
-  // If computer card rank is LESS than player card rank, computer wins
-  if (computerCard.rank < lowestPlayerCard.rank
-    || doesPlayer1HaveQueenAndPlayer2Not(computerCard, lowestPlayerCard)) {
+  // If computer card rank is EQUAL to lowest player card rank,
+  // OR both computer and player have queen, it's a tie
+  if (computerCard.rank == lowestPlayerCard.rank || (computerHasQueen && playerHasQueen)) {
+    return `${genericOutput} <br/><br/> It's a tie.`;
+  }
+  // If computer card rank is LESS than player card rank and player's hand does not have queen,
+  // OR computer card is queen, computer wins
+  if ((computerCard.rank < lowestPlayerCard.rank && !playerHasQueen) || computerHasQueen) {
     // Add conditional-dependent text to the output string
     return `${genericOutput} <br/><br/> Computer wins.`;
   }
-  // Else if computer card rank is GREATER than player card rank, player wins
-  if (computerCard.rank > lowestPlayerCard.rank
-    || doesPlayer1HaveQueenAndPlayer2Not(lowestPlayerCard, computerCard)) {
+  // Else if computer card rank is GREATER than player card rank,
+  // OR player's hand has queen, player wins
+  if (computerCard.rank > lowestPlayerCard.rank || playerHasQueen) {
     return `${genericOutput} <br/><br/> Player wins!`;
   }
-  // Otherwise (i.e. ranks are equal), it's a tie
-  return `${genericOutput} <br/><br/> It's a tie.`;
+  // If none of the above cases are true, we've reached an unexpected outcome
+  return `${genericOutput} <br/><br/> Unexpected outcome.`;
 };
 
 /**
