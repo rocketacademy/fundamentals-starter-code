@@ -355,6 +355,335 @@ var lowCardSuitOutput = function (input) {
 };
 
 /**
+ * Low Card with Wild Card
+ */
+// Check whether 2 card objects are the same card
+var checkAreCardsEqual = function (card1, card2) {
+  return card1.rank == card2.rank && card1.suit == card2.suit;
+};
+
+// Return random element from input array
+var pickRandomCard = function (deck) {
+  return deck[Math.floor(Math.random() * deck.length)];
+};
+
+// Pick random wild card to win
+var wildCard = pickRandomCard(shuffledCardDeck);
+
+var lowCardWithWildCard = function (input) {
+  // If input is empty, prompt user to enter a number of cards to draw
+  if (input == '') {
+    return 'Please enter a number of cards to draw.';
+  }
+
+  // Draw 1 card for the computer
+  var computerCard = shuffledCardDeck.pop();
+  if (checkAreCardsEqual(computerCard, wildCard)) {
+    return `Computer drew Wild Card ${getCardStringRepresentation(computerCard)} and wins.`;
+  }
+
+  // Draw numCardToDraw cards for the player, but only store the card with lowest rank.
+  var numCardsToDraw = Number(input);
+  // Initialise lowest player card rank to 1 above highest possible rank, so that
+  // the first card the player draws will replace this lowest rank.
+  var lowestPlayerCardRank = 14;
+  var playerCards = [];
+  for (var i = 0; i < numCardsToDraw; i += 1) {
+    var currPlayerCard = shuffledCardDeck.pop();
+    if (checkAreCardsEqual(currPlayerCard, wildCard)) {
+      return `Player drew Wild Card ${getCardStringRepresentation(currPlayerCard)} and wins.`;
+    }
+    // Add the current card to the player's hand to display later
+    playerCards.push(currPlayerCard);
+    // If the current card is the lowest of the player's cards so far, mark it as the lowest card.
+    if (currPlayerCard.rank < lowestPlayerCardRank) {
+      lowestPlayerCardRank = currPlayerCard.rank;
+      var lowestPlayerCard = currPlayerCard;
+    }
+  }
+
+  // Construct an output string to communicate which cards were drawn
+  // Print all the cards the player drew, not just the lowest one.
+  var genericOutput = `
+    Computer had ${getCardStringRepresentation(computerCard)}. <br/><br/>
+    Player drew ${printCardswithEmojiSuits(playerCards)}. <br/><br/>
+    Player's lowest card was ${getCardStringRepresentation(lowestPlayerCard)}.
+  `;
+
+  // Determine if 1 player has queen and the other doesn't
+  var computerHasQueen = getIsCardQueen(computerCard);
+  var playerHasQueen = getIsQueenInHand(playerCards);
+
+  // Add to output if 1 player has queen and the other doesn't
+  if (computerHasQueen && !playerHasQueen) {
+    genericOutput += '<br/><br/> Computer has queen and Player does not.';
+  } else if (playerHasQueen && !computerHasQueen) {
+    genericOutput += '<br/><br/> Player has queen and Computer does not.';
+  } else if (playerHasQueen && computerHasQueen) {
+    genericOutput += '<br/><br/> Both Player and Computer have queen.';
+  }
+
+  // Compare computer and player cards by rank attribute
+  // If computer card rank is EQUAL to lowest player card rank,
+  // OR both computer and player have queen, it's a tie
+  if (computerCard.rank == lowestPlayerCard.rank || (computerHasQueen && playerHasQueen)) {
+    return `${genericOutput} <br/><br/> It's a tie.`;
+  }
+  // If computer card rank is LESS than player card rank and player's hand does not have queen,
+  // OR computer card is queen, computer wins
+  if ((computerCard.rank < lowestPlayerCard.rank && !playerHasQueen) || computerHasQueen) {
+    // Add conditional-dependent text to the output string
+    return `${genericOutput} <br/><br/> Computer wins.`;
+  }
+  // Else if computer card rank is GREATER than player card rank,
+  // OR player's hand has queen, player wins
+  if (computerCard.rank > lowestPlayerCard.rank || playerHasQueen) {
+    return `${genericOutput} <br/><br/> Player wins!`;
+  }
+  // If none of the above cases are true, we've reached an unexpected outcome
+  return `${genericOutput} <br/><br/> Unexpected outcome.`;
+};
+
+/**
+ * Low Card with Player-Chosen Wild Card
+ */
+var wildCardName;
+var wildCardSuit;
+
+// Check whether 2 card objects are the same card
+var checkIsCardWildCard = function (card) {
+  return card.name == wildCardName && card.suit == wildCardSuit;
+};
+
+var lowCardWithPlayerChosenWildCard = function (input) {
+  if (!wildCardName) {
+    if (input == '') {
+      return 'Please enter the lowercase name of a card to be the Wild Card, e.g. ace, 2, 10, or queen.';
+    }
+    wildCardName = input;
+    return `You have chosen ${wildCardName} as the Wild Card name. Please enter a suit (spades/hearts/clubs/diamonds) as the Wild Card suit.`;
+  }
+
+  if (!wildCardSuit) {
+    if (input == '') {
+      return 'Please enter the lowercase suit of a card to be the Wild Card, e.g. spades, hearts, clubs, or diamonds.';
+    }
+    wildCardSuit = input;
+    return `You have chosen ${wildCardName} of ${wildCardSuit} as the Wild Card. Please enter a number of cards to draw.`;
+  }
+
+  // If input is empty, prompt user to enter a number of cards to draw
+  if (input == '') {
+    return 'Please enter a number of cards to draw.';
+  }
+
+  // Draw 1 card for the computer
+  var computerCard = shuffledCardDeck.pop();
+  if (checkIsCardWildCard(computerCard)) {
+    return `Computer drew Wild Card ${getCardStringRepresentation(computerCard)} and wins.`;
+  }
+
+  // Draw numCardToDraw cards for the player, but only store the card with lowest rank.
+  var numCardsToDraw = Number(input);
+  // Initialise lowest player card rank to 1 above highest possible rank, so that
+  // the first card the player draws will replace this lowest rank.
+  var lowestPlayerCardRank = 14;
+  var playerCards = [];
+  for (var i = 0; i < numCardsToDraw; i += 1) {
+    var currPlayerCard = shuffledCardDeck.pop();
+    if (checkIsCardWildCard(currPlayerCard)) {
+      return `Player drew Wild Card ${getCardStringRepresentation(currPlayerCard)} and wins.`;
+    }
+    // Add the current card to the player's hand to display later
+    playerCards.push(currPlayerCard);
+    // If the current card is the lowest of the player's cards so far, mark it as the lowest card.
+    if (currPlayerCard.rank < lowestPlayerCardRank) {
+      lowestPlayerCardRank = currPlayerCard.rank;
+      var lowestPlayerCard = currPlayerCard;
+    }
+  }
+
+  // Construct an output string to communicate which cards were drawn
+  // Print all the cards the player drew, not just the lowest one.
+  var genericOutput = `
+    Computer had ${getCardStringRepresentation(computerCard)}. <br/><br/>
+    Player drew ${printCardswithEmojiSuits(playerCards)}. <br/><br/>
+    Player's lowest card was ${getCardStringRepresentation(lowestPlayerCard)}.
+  `;
+
+  // Determine if 1 player has queen and the other doesn't
+  var computerHasQueen = getIsCardQueen(computerCard);
+  var playerHasQueen = getIsQueenInHand(playerCards);
+
+  // Add to output if 1 player has queen and the other doesn't
+  if (computerHasQueen && !playerHasQueen) {
+    genericOutput += '<br/><br/> Computer has queen and Player does not.';
+  } else if (playerHasQueen && !computerHasQueen) {
+    genericOutput += '<br/><br/> Player has queen and Computer does not.';
+  } else if (playerHasQueen && computerHasQueen) {
+    genericOutput += '<br/><br/> Both Player and Computer have queen.';
+  }
+
+  // Compare computer and player cards by rank attribute
+  // If computer card rank is EQUAL to lowest player card rank,
+  // OR both computer and player have queen, it's a tie
+  if (computerCard.rank == lowestPlayerCard.rank || (computerHasQueen && playerHasQueen)) {
+    return `${genericOutput} <br/><br/> It's a tie.`;
+  }
+  // If computer card rank is LESS than player card rank and player's hand does not have queen,
+  // OR computer card is queen, computer wins
+  if ((computerCard.rank < lowestPlayerCard.rank && !playerHasQueen) || computerHasQueen) {
+    // Add conditional-dependent text to the output string
+    return `${genericOutput} <br/><br/> Computer wins.`;
+  }
+  // Else if computer card rank is GREATER than player card rank,
+  // OR player's hand has queen, player wins
+  if (computerCard.rank > lowestPlayerCard.rank || playerHasQueen) {
+    return `${genericOutput} <br/><br/> Player wins!`;
+  }
+  // If none of the above cases are true, we've reached an unexpected outcome
+  return `${genericOutput} <br/><br/> Unexpected outcome.`;
+};
+
+/**
+ * Low Card With Bets
+ */
+// Player starts with 100 points
+var mode = 'wager points';
+var playerPoints = 100;
+var pointsToWager;
+
+// winningPlayer can be either 'p' or 'c'
+var updatePlayerPoints = function (winningPlayer) {
+  // Add wagered points if player wins
+  if (winningPlayer == 'p') {
+    playerPoints += pointsToWager;
+    return;
+  }
+  // Subtract wagered points if computer wins
+  playerPoints -= pointsToWager;
+};
+
+// Create standard output instructions for next round's point wager
+var generateWagerPointsMessage = function () {
+  return `Player currently has ${playerPoints} points. Please choose number of points to wager for next round.`;
+};
+
+var lowCardWithBets = function (input) {
+  if (!wildCardName) {
+    if (input == '') {
+      return 'Please enter the lowercase name of a card to be the Wild Card, e.g. ace, 2, 10, or queen.';
+    }
+    wildCardName = input;
+    return `You have chosen ${wildCardName} as the Wild Card name. Please enter a suit (spades/hearts/clubs/diamonds) as the Wild Card suit.`;
+  }
+
+  if (!wildCardSuit) {
+    if (input == '') {
+      return 'Please enter the lowercase suit of a card to be the Wild Card, e.g. spades, hearts, clubs, or diamonds.';
+    }
+    wildCardSuit = input;
+    return `You have chosen ${wildCardName} of ${wildCardSuit} as the Wild Card. You have ${playerPoints} points. Please enter a number of points to wager.`;
+  }
+
+  if (mode == 'wager points') {
+    pointsToWager = Number(input);
+    if (input == '' || Number.isNaN(pointsToWager)) {
+      return `Please enter a number of points to wager. You currently have ${playerPoints} points.`;
+    }
+    mode = 'play game';
+    return `You have wagered ${pointsToWager} points. Please enter a number of cards to draw.`;
+  }
+
+  // If input is empty, prompt user to enter a number of cards to draw
+  if (input == '') {
+    return 'Please enter a number of cards to draw.';
+  }
+
+  // Draw 1 card for the computer
+  var computerCard = shuffledCardDeck.pop();
+  if (checkIsCardWildCard(computerCard)) {
+    // Update player's points based on wagered amount
+    updatePlayerPoints('c');
+    // Reset game after computer wins to allow point wager
+    mode = 'wager points';
+    return `Computer drew Wild Card ${getCardStringRepresentation(computerCard)} and wins. ${generateWagerPointsMessage()}`;
+  }
+
+  // Draw numCardToDraw cards for the player, but only store the card with lowest rank.
+  var numCardsToDraw = Number(input);
+  // Initialise lowest player card rank to 1 above highest possible rank, so that
+  // the first card the player draws will replace this lowest rank.
+  var lowestPlayerCardRank = 14;
+  var playerCards = [];
+  for (var i = 0; i < numCardsToDraw; i += 1) {
+    var currPlayerCard = shuffledCardDeck.pop();
+    if (checkIsCardWildCard(currPlayerCard)) {
+      // Update player's points based on wagered amount
+      updatePlayerPoints('p');
+      // Reset game after player wins to allow point wager
+      mode = 'wager points';
+      return `Player drew Wild Card ${getCardStringRepresentation(currPlayerCard)} and wins. ${generateWagerPointsMessage()}`;
+    }
+    // Add the current card to the player's hand to display later
+    playerCards.push(currPlayerCard);
+    // If the current card is the lowest of the player's cards so far, mark it as the lowest card.
+    if (currPlayerCard.rank < lowestPlayerCardRank) {
+      lowestPlayerCardRank = currPlayerCard.rank;
+      var lowestPlayerCard = currPlayerCard;
+    }
+  }
+
+  // Construct an output string to communicate which cards were drawn
+  // Print all the cards the player drew, not just the lowest one.
+  var genericOutput = `
+    Computer had ${getCardStringRepresentation(computerCard)}. <br/><br/>
+    Player drew ${printCardswithEmojiSuits(playerCards)}. <br/><br/>
+    Player's lowest card was ${getCardStringRepresentation(lowestPlayerCard)}.
+  `;
+
+  // Determine if 1 player has queen and the other doesn't
+  var computerHasQueen = getIsCardQueen(computerCard);
+  var playerHasQueen = getIsQueenInHand(playerCards);
+
+  // Add to output if 1 player has queen and the other doesn't
+  if (computerHasQueen && !playerHasQueen) {
+    genericOutput += '<br/><br/> Computer has queen and Player does not.';
+  } else if (playerHasQueen && !computerHasQueen) {
+    genericOutput += '<br/><br/> Player has queen and Computer does not.';
+  } else if (playerHasQueen && computerHasQueen) {
+    genericOutput += '<br/><br/> Both Player and Computer have queen.';
+  }
+
+  // Reset mode before next round so that player can wager points again.
+  mode = 'wager points';
+
+  // Compare computer and player cards by rank attribute
+  // If computer card rank is EQUAL to lowest player card rank,
+  // OR both computer and player have queen, it's a tie
+  if (computerCard.rank == lowestPlayerCard.rank || (computerHasQueen && playerHasQueen)) {
+    return `${genericOutput} <br/><br/> It's a tie. ${generateWagerPointsMessage()}`;
+  }
+  // If computer card rank is LESS than player card rank and player's hand does not have queen,
+  // OR computer card is queen, computer wins
+  if ((computerCard.rank < lowestPlayerCard.rank && !playerHasQueen) || computerHasQueen) {
+    // Update player's points based on wagered amount
+    updatePlayerPoints('c');
+    // Add conditional-dependent text to the output string
+    return `${genericOutput} <br/><br/> Computer wins. ${generateWagerPointsMessage()}`;
+  }
+  // Else if computer card rank is GREATER than player card rank,
+  // OR player's hand has queen, player wins
+  if (computerCard.rank > lowestPlayerCard.rank || playerHasQueen) {
+    // Update player's points based on wagered amount
+    updatePlayerPoints('p');
+    return `${genericOutput} <br/><br/> Player wins! ${generateWagerPointsMessage()}`;
+  }
+  // If none of the above cases are true, we've reached an unexpected outcome
+  return `${genericOutput} <br/><br/> Unexpected outcome. ${generateWagerPointsMessage()}`;
+};
+
+/**
  * Instructions:
  * Each group of functions under a "/**" comment represents 1 exercise, and
  * each function in the following main function represents 1 exercise.
@@ -367,4 +696,7 @@ var main = function (input) {
   // return lowCardWithQueenWinner();
   // return lowCardHands(input);
   // return lowCardSuitOutput(input);
+  // return lowCardWithWildCard(input);
+  // return lowCardWithPlayerChosenWildCard(input);
+  // return lowCardWithBets(input);
 };
