@@ -33,7 +33,8 @@ var calcYearsToHugAllSgpeans = function (hugDurationPreference) {
   // convert ans to years
   var yearsToHugPopn = daysTakenToHugPopn / daysInAYear;
 
-  return yearsToHugPopn;
+  // return yearsToHugPopn; toFixed sets the answer to 2 decimal place
+  return yearsToHugPopn.toFixed(2);
 };
 
 var main = function (input) {
