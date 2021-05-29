@@ -23,7 +23,8 @@ var calcVolJuiceNeeded = function (numOfGuests) {
   var litresPerGlass = convertMlToL(mlPerGlass);
   // calculate the vol (in litres) of  juice we'll need, given the number of guests.
   var litresNeeded = numOfGuests * litresPerGlass;
-  return litresNeeded;
+  // return the litresNeeded. toFixed allows you to set the ans to # decimal places
+  return litresNeeded.toFixed(2);
 };
 // ========================================
 
