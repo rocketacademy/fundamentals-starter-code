@@ -2,7 +2,9 @@
 Title: SG Hugs
 Prompt: Everyone has a different gauge for how long they like to hug. The user can enter a number of seconds they like to hug on average, and the app will calculate how many years it will take to hug everyone in Singapore. You are allowed 9 hours a day to sleep and eat.
 */
+// ======Helper function(s)===================
 var convertSecsToHrs = function (timeInSeconds) {
+  // Assign fixed values to variables
   var secondsPerMin = 60;
   var minsPerHr = 60;
   var timeInMins = timeInSeconds / secondsPerMin;
@@ -37,6 +39,8 @@ var calcYearsToHugAllSgpeans = function (hugDurationPreference) {
   return yearsToHugPopn.toFixed(2);
 };
 
+// ===========================================
+// ======Helper function(s)===================
 var main = function (input) {
   var yearsToHugAllSgpeans = calcYearsToHugAllSgpeans(input);
   var myOutputValue = `It will take ${yearsToHugAllSgpeans} yrs to hug all Sgpeans if your preferred hug duration is ${input} secs`;
