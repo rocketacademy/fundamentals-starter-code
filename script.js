@@ -5,18 +5,19 @@ Prompt: Two trains are leaving to Tokyo. Train 1 is traveling 200kph. It will re
 Relevant mathematical formula to note: dist= speed x time
 */
 // ================Helper fns===========
-var converMinsToHrs = function (mins) {
+var convertMinsToHrs = function (mins) {
   return mins / 60;
 };
 
 var calcTrainTwoSpeed = function (delayInMins) {
+  // save the fixed values to variables
   var trainSpeed = 200;
   var timeToTokyo = 2;
   // calculate the distance to tokyo
   var distanceToTokyo = trainSpeed * timeToTokyo;
 
   // calculate new time available for travel after subtracting the delay
-  var remainingTimeForTravel = timeToTokyo - converMinsToHrs(delayInMins);
+  var remainingTimeForTravel = timeToTokyo - convertMinsToHrs(delayInMins);
 
   // calculate the speed that train 2 needs to travel at, in order to cover the same distance at a reduced travel time
   trainTwoNewSpeed = distanceToTokyo / remainingTimeForTravel;
@@ -25,6 +26,7 @@ var calcTrainTwoSpeed = function (delayInMins) {
   return trainTwoNewSpeed.toFixed(2);
 };
 //=========================================
+// =========Main===========================
 var main = function (input) {
   var trainTwoNewSpeed = calcTrainTwoSpeed(input);
   var myOutputValue = `Given a ${input}min delay, train 2 needs to travel at a speed of ${trainTwoNewSpeed} km/h in order to arrive at the same time as train 1`;
