@@ -27,6 +27,7 @@ var calcVolJuiceNeeded = function (numOfGuests) {
   return litresNeeded.toFixed(2);
 };
 // ========================================
+// ==========Main==========================
 
 var main = function (input) {
   // Invoke your helper fns to do the calculations you want. Remember that you'll need to assign these to variables; if not, the fn gets executed but the output (i.e. whatever is in the fn's return statement) is not captured and won't be available for use.
