@@ -4,7 +4,7 @@ Prompt: Two trains are leaving to Tokyo. Train 1 is traveling 200kph. It will re
 
 Relevant mathematical formula to note: dist= speed x time
 */
-
+// ================Helper fns===========
 var converMinsToHrs = function (mins) {
   return mins / 60;
 };
@@ -24,7 +24,7 @@ var calcTrainTwoSpeed = function (delayInMins) {
   // return the new speed; 'toFixed' limits the ans to a specified decimal place
   return trainTwoNewSpeed.toFixed(2);
 };
-
+//=========================================
 var main = function (input) {
   var trainTwoNewSpeed = calcTrainTwoSpeed(input);
   var myOutputValue = `Given a ${input}min delay, train 2 needs to travel at a speed of ${trainTwoNewSpeed} km/h in order to arrive at the same time as train 1`;
