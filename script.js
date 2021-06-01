@@ -2,6 +2,8 @@
 Title: House Paint
 Prompt: Estimate the price of painting your home. Your designer home has windows and doors all of the same size: 90cm x 150cm. There are 8 windows and 3 doors. Each room in your 6-room house is the same size: 3m x 3m. Paint will cover 300 square meters per litre. You want to apply 2 coats. The user will enter a dollar amount of paint per litre and the app will calculate how much it will cost. */
 
+// =================Helper function(s)==============
+
 var calcSurfaceArea = function (l, w) {
   return l * w;
 };
@@ -10,6 +12,7 @@ var convertCmToM = function (lengthInCm) {
 };
 
 var calcCostOfPaintingHouse = function (costOfPaintPerLitre) {
+  // assign fixed vals to variables
   var numWindows = 8;
   var numDoors = 3;
   var numRooms = 6;
@@ -42,6 +45,8 @@ var calcCostOfPaintingHouse = function (costOfPaintPerLitre) {
   return totalCost.toFixed(2);
 };
 
+// ===================================
+// =================Main==============
 var main = function (input) {
   var costOfPaintingHouse = calcCostOfPaintingHouse(input);
   var myOutputValue = `It will cost $${costOfPaintingHouse} to paint the house based on a price of $${input} per litre of paint `;
