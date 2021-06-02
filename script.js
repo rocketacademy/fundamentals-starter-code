@@ -6,7 +6,7 @@ var main = function (input) {
   var drawMessage = "Draw!";
   var loseMessage = "You Lose!";
   var emptyMessage = "Please enter scissors/paper/rock into box";
-  var invalidMessage = "Invalid entry!!!!!";
+  var invalidMessage = "Invalid entry!!!!";
 
   //scissors win paper
   if (input == "scissors" && assignNumberToOption == "paper") {
