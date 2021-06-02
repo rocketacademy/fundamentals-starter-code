@@ -2,6 +2,7 @@ var main = function (input) {
   //Option is Computer Generated Result of RPS
   var assignNumberToOption = randomiser();
   console.log(assignNumberToOption);
+  //Messages
   var winMessage = "You Win";
   var drawMessage = "Draw!";
   var loseMessage = "You Lose!";
