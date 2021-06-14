@@ -69,7 +69,7 @@ var main = function (input) {
   // update prevDiceRoll with the current dice roll
   prevDiceRoll = randomDiceNumber;
 
-  // Set the display for the scenario where the user doesnt't win
+  // Set the display message for the scenario where the user doesnt't win
   var myOutputValue =
     prevDiceRollInfo +
     ' You just rolled a ' +
@@ -79,7 +79,7 @@ var main = function (input) {
     ". You didn't win any points. <br><br> Your score: " +
     score;
 
-  // Check if the user won; consider it a win if the difference btw userGuess and the rolled num is at most 4
+  // Check if the user won; Consider it a win if the difference btw userGuess and the rolled num is at most 4
   if (
     (userGuess >= randomDiceNumber && userGuess <= randomDiceNumber + 4) ||
     (userGuess <= randomDiceNumber && userGuess >= randomDiceNumber - 4)
@@ -88,6 +88,8 @@ var main = function (input) {
     var increment = determineScoreincrement(randomDiceNumber, userGuess);
     score += increment;
 
+    // Set the display message for the scenario where the user doesnt't win
+    //Notice that we are re-assigning myOutputValue with a new value (i.e. a win msg) that replaces the old value (i.e. a lose msg). This is because line 73 alr assigns a value to myOutputValue, but now we want to replace that value since it is a win instead of a loss.
     myOutputValue =
       prevDiceRollInfo +
       ' You just rolled a ' +
