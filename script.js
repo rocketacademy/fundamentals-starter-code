@@ -20,14 +20,14 @@ var rollDice = function () {
 };
 
 /**
- * Set a function that display info about the previous dice roll
+ * Set a function that displays info about the previous dice roll
  */
 var getPrevDiceRollInfo = function () {
-  // if there wasn't a previous roll, return an empty string.
+  // Handle the scenario where this is the first roll and hence there isn't a previous roll value.
   if (prevDiceRoll == 0) {
     return 'This was your first roll. ';
   }
-  // if there was a previousDiceRoll, display that to the user
+  // Since this is not the first roll, display the previous roll's value to the user
   return 'Your previous roll was ' + prevDiceRoll + '.';
 };
 
@@ -37,9 +37,12 @@ var getPrevDiceRollInfo = function () {
  * Determine the score increment depending on how far off the guess was from the dice roll
  */
 var determineScoreincrement = function (diceNum, userGuess) {
+  // If the roll and the guess are the same value, set the increment at 5
   if (diceNum == userGuess) {
     return 5;
-  } else if (diceNum == userGuess + 4 || diceNum == userGuess - 4) {
+  }
+  // Else set the respective increments depending on how far the guess deviates from the roll
+  else if (diceNum == userGuess + 4 || diceNum == userGuess - 4) {
     return 1;
   } else if (diceNum == userGuess + 3 || diceNum == userGuess - 3) {
     return 2;
@@ -66,6 +69,7 @@ var main = function (input) {
   // update prevDiceRoll with the current dice roll
   prevDiceRoll = randomDiceNumber;
 
+  // Set the display for the scenario where the user doesnt't win
   var myOutputValue =
     prevDiceRollInfo +
     ' You just rolled a ' +
@@ -75,7 +79,7 @@ var main = function (input) {
     ". You didn't win any points. <br><br> Your score: " +
     score;
 
-  // consider it a win if the difference btw userGuess and the rolled num is at most 4
+  // Check if the user won; consider it a win if the difference btw userGuess and the rolled num is at most 4
   if (
     (userGuess >= randomDiceNumber && userGuess <= randomDiceNumber + 4) ||
     (userGuess <= randomDiceNumber && userGuess >= randomDiceNumber - 4)
