@@ -54,6 +54,8 @@ var determineScoreincrement = function (diceNum, userGuess) {
     return 5;
   }
   // Else set the respective increments depending on how far the guess deviates from the roll
+  // Explanation of <else if> (used below): We can use the <else if> statement to specify a new condition if the first condition is false. The key difference between 1. A series of <if> blocks, and 2. A series of <if><else if> blocks, is that the computer recognises the latter as mutually exclusive blocks of code. This means that, for <if><else if> blocks, once the computer finds an if statement that evaluates to true, it will run that block of code and thereafter skip the other <else if> blocks of code (as opposed to scanning all the other <else if> statments to see if they are true.
+  // See unit 8.2 for more elaboration on <Else if>.
   else if (diceNum == userGuess + 4 || diceNum == userGuess - 4) {
     return 1;
   } else if (diceNum == userGuess + 3 || diceNum == userGuess - 3) {
