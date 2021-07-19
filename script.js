@@ -156,6 +156,11 @@ var main = function (input) {
   // Change user input from a string to a number; then, assign it to a variable so it's more intuitive to reference.
   var userGuess = Number(input);
 
+  // Validate input: if user input was larger than 6, instruct user to put in numbers from 1-6
+  if (userGuess > 6 || userGuess < 1) {
+    return 'Please enter a number from 1 to 6';
+  }
+
   // increase the number of games played
   numGamesPlayed += 1;
 
