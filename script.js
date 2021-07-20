@@ -1,10 +1,18 @@
+// Winrate
 var correctGuesses = 0;
-
+var numberOfTries = 0;
+var correctGuessesRate = correctGuesses + "/" + numberOfTries;
+// Game
 var main = function (input) {
   var computer = computerWord();
+  // Default output
   var myOutputValue = "Please input 'banana', 'chisel' or 'faucet'.";
-
+  // If the user guesses incorrectly:
   if (input != computer) {
+    // Regardless of outcome, number of tries will increase by 1
+    numberOfTries = numberOfTries + 1;
+    // Computing the guess rate
+    correctGuessesRate = correctGuesses + "/" + numberOfTries;
     myOutputValue =
       "You guessed wrongly! You picked " +
       input +
@@ -21,11 +29,19 @@ var main = function (input) {
       (2 - correctGuesses) +
       "<br>" +
       "<br>" +
+      "Your guess rate = " +
+      correctGuessesRate +
+      "<br>" +
+      "<br>" +
       "Try again by inputting 'banana', 'chisel' or 'faucet'.";
     console.log("The results are different");
   }
+  // If the user guesses correctly
   if (input == computer) {
+    numberOfTries = numberOfTries + 1;
+    // Number of correct guesses has increased.
     correctGuesses = correctGuesses + 1;
+    correctGuessesRate = correctGuesses + "/" + numberOfTries;
     myOutputValue =
       "You guessed correctly! You picked " +
       input +
@@ -40,6 +56,10 @@ var main = function (input) {
       "<br>" +
       "Number of correct guesses required = " +
       (2 - correctGuesses) +
+      "<br>" +
+      "<br>" +
+      "Your guess rate = " +
+      correctGuessesRate +
       "<br>" +
       "<br>" +
       "Try again by inputting 'banana', 'chisel' or 'faucet'.";
@@ -52,6 +72,7 @@ var main = function (input) {
     console.log(correctGuesses);
   }
   if (correctGuesses == 2) {
+    correctGuessesRate = correctGuesses + "/" + numberOfTries;
     myOutputValue =
       "You guessed correctly! You picked " +
       input +
@@ -66,6 +87,10 @@ var main = function (input) {
       "<br>" +
       "Number of correct guesses required = " +
       (2 - correctGuesses) +
+      "<br>" +
+      "<br>" +
+      "Your guess rate = " +
+      correctGuessesRate +
       "<br>" +
       "<br>" +
       "You have guessed twice correctly and hence beat the game!";
