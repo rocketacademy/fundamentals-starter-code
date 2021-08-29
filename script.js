@@ -42,6 +42,7 @@ var playSecretWord = function (guessedWord) {
   var secretWord = generateSecretWord();
   var standardMessage = `You guessed: ${guessedWord}. Secret word: ${secretWord}.`;
   if (secretWord == guessedWord) {
+    // "+=" (below) is just a shorter way to write  <numCorrectGuessesSoFar=numCorrectGuessesSoFar+1>
     numCorrectGuessesSoFar += 1;
     if (numCorrectGuessesSoFar >= numCorrectGuessesNeededToWin) {
       // Reset counter of correct guesses to restart game.
@@ -50,7 +51,8 @@ var playSecretWord = function (guessedWord) {
     }
     return `${standardMessage} You guessed correctly! You need 1 more correct guess to win.`;
   }
-  var numCorrectGuessesRemainingToWin = numCorrectGuessesNeededToWin - numCorrectGuessesSoFar;
+  var numCorrectGuessesRemainingToWin =
+    numCorrectGuessesNeededToWin - numCorrectGuessesSoFar;
   return `${standardMessage} You guessed incorrectly. You need ${numCorrectGuessesRemainingToWin} more correct guesses to win.`;
 };
 
@@ -63,6 +65,7 @@ var prevSecretWord = '';
 var generateSecretWordNoRepeats = function () {
   var secretWord = prevSecretWord;
   // Keep generating secret words until we get a different word
+  // "While" Creates a loop that repeats itself as long as a given condition is true (the condition being assessed is that which is in the parenthesis). We'll learn more about "while loops" in Day 6. You can also read more about "while loops" here: https://www.w3schools.com/jsref/jsref_while.asp
   while (secretWord == prevSecretWord) {
     // Use generateSecretWord function from previous exercise
     secretWord = generateSecretWord();
@@ -124,7 +127,8 @@ var playSecretWordXInARow = function (guessedWord) {
       isStartOfRound = true;
       return `${standardMessage} You guessed correctly ${numCorrectGuessesNeededToWin} times in a row. You win! Please play again.`;
     }
-    var numCorrectGuessesRemainingToWin = numCorrectGuessesNeededToWin - numCorrectGuessesSoFar;
+    var numCorrectGuessesRemainingToWin =
+      numCorrectGuessesNeededToWin - numCorrectGuessesSoFar;
     return `${standardMessage} You guessed correctly! You need ${numCorrectGuessesRemainingToWin} more correct guess to win.`;
   }
 
@@ -154,7 +158,10 @@ var diceWithin = function (playerGuess) {
   var diceRoll = rollDice();
   var standardMessage = `Your guess: ${playerGuess}. Dice roll: ${diceRoll}. Within number: ${withinNum}.`;
 
-  if (playerGuess <= diceRoll + withinNum && playerGuess >= diceRoll - withinNum) {
+  if (
+    playerGuess <= diceRoll + withinNum &&
+    playerGuess >= diceRoll - withinNum
+  ) {
     isStartOfRound = true;
     return `${standardMessage} You win!`;
   }
@@ -170,8 +177,10 @@ var determineIsWithinRange = function (guess, diceRoll) {
 
 // Determine if the guess is within the range of either dice rolls 1 or 2
 var determineWin = function (guess, diceRoll1, diceRoll2) {
-  return determineIsWithinRange(guess, diceRoll1)
-    || determineIsWithinRange(guess, diceRoll2);
+  return (
+    determineIsWithinRange(guess, diceRoll1) ||
+    determineIsWithinRange(guess, diceRoll2)
+  );
 };
 
 var diceWithinWith2Dice = function (playerGuess) {
