@@ -1,84 +1,147 @@
+var winCount = 0;
+var lossCount = 0;
+var inputCount = 0;
+var username;
+
 var main = function (input) {
-  //To check the validity of the user input
-  if (isInvalidInput(input)) {
+  if (inputCount != 0 && isInvalidInput(input)) {
     return "There are only 3 input options, please try again";
   }
 
-  //Assign Computer Selection; 0 = paper, 1 = scissors, 2 = stone
-  var computer = generateRandNum();
-  if (computer == 0) {
-    var computer = "paper";
-  }
-  if (computer == 1) {
-    var computer = "scissors";
-  }
-  if (computer == 2) {
-    var computer = "stone";
+  if (inputCount == 0) {
+    inputCount = inputCount + 1;
+    return saveUser(input);
   }
 
-  //Check if there is a winning combination, default result is the user lose
-  var result = "You lose! Bummer.<br>";
-  if (input == "paper" && computer == "stone") {
-    result = "You win<br>";
-  }
-  if (input == "scissors" && computer == "paper") {
-    result = "You win<br>";
-  }
-  if (input == "stone" && computer == "scissors") {
-    result = "You win<br>";
-  }
-  //Check for a possible draw
-  if (input == computer) {
-    result = "It is a draw<br>";
-  }
+  var computer = generateComputerSelection();
 
-  //Formatting
-  var output1;
-  if (computer == "paper") {
-    output1 = "The computer chose paper 🗒<br>";
-  }
-  if (computer == "scissors") {
-    output1 = "The computer chose paper ✂️<br>";
-  }
-  if (computer == "stone") {
-    output1 = "The computer chose stone 🪨<br>";
-  }
+  var winStatus = checkWinStatus(input, computer);
+  inputCount = inputCount + 1;
 
-  //Formatting
-  var output2;
-  if (input == "paper") {
-    output2 = "You chose paper 🗒<br>";
+  if (winStatus == "win") {
+    winCount = winCount + 1;
   }
-  if (input == "scissors") {
-    output2 = "You chose scissors ✂️<br>";
+  if (winStatus == "loss") {
+    lossCount = lossCount + 1;
   }
-  if (input == "stone") {
-    output2 = "You chose stone 🪨<br>";
-  }
-
-  //Formatting
-  var combinedOutput =
-    output1 +
-    output2 +
-    "<br>" +
-    result +
-    "<br>" +
-    'Now you can type "scissors" "paper" or "stone" to play another round!';
-
-  return combinedOutput;
+  return generateOutput(winStatus, input, computer);
 };
 
-//To generate random number between 0 to 2 inclusive
-var generateRandNum = function () {
+// Save user name
+var saveUser = function (input) {
+  username = input;
+  return "User name is saved, continue to scissors, paper, stone game!";
+};
+
+// Generate Output Statement
+var generateOutput = function (winStatus, input, computer) {
+  // Computer Selection
+  var statement1;
+  if (computer == "paper") {
+    statement1 = "The computer chose paper 🗒<br>";
+  }
+  if (computer == "scissors") {
+    statement1 = "The computer chose scissors ✂️<br>";
+  }
+  if (computer == "stone") {
+    statement1 = "The computer chose stone 🪨<br>";
+  }
+
+  //User Input
+  var statement2;
+  if (input == "paper") {
+    statement2 = "You chose paper 🗒<br>";
+  }
+  if (input == "scissors") {
+    statement2 = "You chose scissors ✂️<br>";
+  }
+  if (input == "stone") {
+    statement2 = "You chose stone 🪨<br>";
+  }
+
+  var combinedStatement;
+  // Combined Statement
+  if (winStatus == "win")
+    combinedStatement =
+      statement1 +
+      statement2 +
+      "<br>" +
+      "You win<br>" +
+      "<br>" +
+      `So far ${username}, you've been winning ${winCount}/${lossCount} turns. Pretty good!`;
+  if (winStatus == "loss")
+    combinedStatement =
+      statement1 +
+      statement2 +
+      "<br>" +
+      "You lose! Bummer.<br>" +
+      "<br>" +
+      `So far ${username}, you've been winning ${winCount}/${lossCount} turns. Pretty good!`;
+  if (winStatus == "draw")
+    combinedStatement =
+      statement1 +
+      statement2 +
+      "<br>" +
+      "It is a draw<br>" +
+      "<br>" +
+      `So far ${username}, you've been winning ${winCount}/${lossCount} turns. Pretty good!`;
+
+  return combinedStatement;
+};
+
+// Check win status, function will return string "win", "loss", "draw"
+var checkWinStatus = function (input, computer) {
+  if (input == "paper") {
+    if (computer == "stone") {
+      return "win";
+    }
+    if (computer == "scissors") {
+      return "loss";
+    }
+  }
+  if (input == "scissors") {
+    if (computer == "paper") {
+      return "win";
+    }
+    if (computer == "stone") {
+      return "loss";
+    }
+  }
+  if (input == "stone") {
+    if (computer == "scissors") {
+      return "win";
+    }
+    if (computer == "paper") {
+      return "loss";
+    }
+
+    if (input == computer) {
+      return "draw";
+    }
+  }
+};
+
+//Assign Computer Selection based on random integer generated, 0 = paper, 1 = scissors, 2 = stone
+var generateComputerSelection = function () {
   var randomFloat = Math.random() * 3;
   var resultInteger = Math.floor(randomFloat);
-  return resultInteger;
+
+  if (resultInteger == 0) {
+    return "paper";
+  }
+  if (resultInteger == 1) {
+    return "scissors";
+  }
+  if (resultInteger == 2) {
+    return "stone";
+  }
 };
 
 //To check fo invalid input, return Boolean true if input is invalid
 var isInvalidInput = function (input) {
   if (input == "stone" || input == "paper" || input == "scissors") {
     return false;
+  } else {
+    return true;
   }
-  return true;
 };
