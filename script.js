@@ -13,7 +13,7 @@ var convertCmToM = function (lengthInCm) {
 
 var calcCostOfPaintingHouse = function (costOfPaintPerLitre) {
   // assign fixed vals to variables
-  var numWindows = 5;
+  var numWindows = 6;
   var numDoors = 8;
   var numRooms = 6;
   var surfaceAreaOfRoom = calcSurfaceArea(3, 3);
