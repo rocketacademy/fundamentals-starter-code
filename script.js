@@ -1,5 +1,9 @@
+//declare global variable
+var winCounter = 0;
+var loseCounter = 0;
+
 var main = function (input) {
-  var myOutputValue = "hello world";
+  var myOutputValue = "Please input Rock, Paper or Scissors";
 
   var computerShows = computerGuess();
   //if user chooses rock,  computer chooses scissors, user wins
@@ -10,11 +14,21 @@ var main = function (input) {
     (input == "paper" && computerShows == "rock") ||
     (input == "scissors" && computerShows == "paper")
   ) {
+    winCounter = winCounter + 1;
+    var winPercentage = (
+      100 *
+      (winCounter / (winCounter + loseCounter))
+    ).toFixed(2);
+    console.log("winCount");
+    console.log(winCounter);
     var myOutputValue =
       "you win! <br><br> you guessed " +
       input +
       " while computer guessed " +
-      computerShows;
+      computerShows +
+      "<br> you won " +
+      winPercentage +
+      " % of the time";
   }
 
   //if user chooses rock, computer chooses paper, user loses
@@ -25,11 +39,21 @@ var main = function (input) {
     (input == "paper" && computerShows == "scissors") ||
     (input == "scissors" && computerShows == "rock")
   ) {
+    loseCounter = loseCounter + 1;
+    console.log("loseCount");
+    console.log(loseCounter);
+    var winPercentage = (
+      100 *
+      (winCounter / (winCounter + loseCounter))
+    ).toFixed(2);
     var myOutputValue =
       "you lose! <br><br> you guessed " +
       input +
       " while computer guessed " +
-      computerShows;
+      computerShows +
+      "<br> you won " +
+      winPercentage +
+      " % of the time";
   }
 
   //if user chooses rock, computer chooses rock, they draw
