@@ -1,46 +1,50 @@
-var main = function (input) {
-  var randomDiceRoll = diceRoll();
-  console.log("dice roll");
-  console.log(randomDiceRoll);
-  if (input == "scissors") {
-    if (randomDiceRoll == 1) {
-      myOutputValue = "scissors,draw";
-    }
-    if (randomDiceRoll == 2) {
-      myOutputValue = "paper,win";
-    }
-    if (randomDiceRoll == 3) {
-      myOutputValue = "stone,lose";
-    }
-  }
-  if (input == "paper") {
-    if (randomDiceRoll == 1) {
-      myOutputValue = "scissors,lose";
-    }
-    if (randomDiceRoll == 2) {
-      myOutputValue = "paper,draw";
-    }
-    if (randomDiceRoll == 3) {
-      myOutputValue = "stone,win";
-    }
-  }
-  if (input == "stone") {
-    if (randomDiceRoll == 1) {
-      myOutputValue = "scissors,win";
-    }
-    if (randomDiceRoll == 2) {
-      myOutputValue = "paper,lose";
-    }
-    if (randomDiceRoll == 3) {
-      myOutputValue = "stone,draw";
-    }
-  }
-  return myOutputValue;
-};
+var scissors = "scissors";
+var paper = "paper";
+var stone = "stone";
+
+var noTimesPlayerWin = 0;
+var noTimesPlayerLose = 0;
+var noTimesDraw = 0;
+
+var userName = "";
 
 var diceRoll = function () {
-  var randomDec = Math.random() * 3;
-  var randomInt = Math.floor(randomDec);
-  var diceNum = randomInt + 1;
-  return diceNum;
+  randomDice = Math.floor(Math.random) * 3;
+  if (randomDice == 0) {
+    return scissors;
+  }
+  if (randomDice == 1) {
+    return paper;
+  }
+  if (randomDice == 2) {
+    return stone;
+  }
+};
+
+var main = function (input) {
+  if (!userName) {
+    if (!input) {
+      return "please input username";
+    }
+    userName = input;
+    return "thank you," + userName + ".you can start playing sps.";
+  }
+  if (input != scissors && input != paper && input != stone) {
+    return "please input scissors,paper or stone.";
+  }
+
+  var playerObject = input;
+  var computerObject = diceRoll();
+
+  if (playerObject == computerObject) {
+    return "draw";
+  }
+  if (
+    (playerObject == scissors && computerObject == paper) ||
+    (playerObject == paper && computerObject == stone) ||
+    (playerObject == stone && computerObject == scissors)
+  ) {
+    return "win";
+  }
+  return "lose";
 };
