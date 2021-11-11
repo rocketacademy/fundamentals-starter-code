@@ -1,7 +1,15 @@
+<!--  All HTML files begin with the following line: -->
 <!DOCTYPE html>
+<!-- This indicates that the rest of the lines that follow are to be interpreted as HTML. It tells the browser about what document type to expect. -->
+
+<!-- All text enclosed in angled brackets are known as HTML element tags. There are usually, but not always, starting and closing element "tags", each representing a HTML element.
+The <html> element is known as the root element of a HTML page. All other elements are encased within it. -->
 <html>
+  <!-- The <head> element contains meta information about the HTML page, information that is not rendered or displayed by the browser -->
   <head>
+    <!-- The <title> element specifies a title for the HTML page (which is shown in the browser's title bar or in the page's tab) and is the default name given to a bookmark of a webpage. -->
     <title>Basics</title>
+    <!-- The <style> element contains information relating to the layout and style of the webpage. The syntax within a <style> tag is referred to as CSS - Cascading Style Sheets. -->
     <style>
       * {
         box-sizing: border-box;
@@ -48,31 +56,39 @@
     </style>
   </head>
 
+  <!-- The <body> element defines the document's body, and is a container for all the visible contents that will be rendered by the browser.  -->
   <body>
+    <!-- The <h1> element defines a large heading. There are 6 pre-set header elements, <h1> to <h6> -->
     <h1 id="header">Basics! 🚀</h1>
+    <!-- The <div> tag defines a division or a section in an HTML document, and is commonly use as a "container" for nested HTML elements. -->
     <div id="container">
+      <!-- The <p> tag defines a paragraph element. -->
       <p>Input:</p>
+      <!-- The self-closing <input /> tag represents a field for a user to enter input. -->
       <input id="input-field" />
+      <!-- The self-closing <br /> tag represents a line break - a line's worth of spacing before dispalying the next element. -->
       <br />
+      <!-- The <button> tag represents.. you guessed it! a button. -->
       <button id="submit-button">Submit</button>
       <p>Output:</p>
       <div id="output-div"></div>
     </div>
+    <!-- Everything below this is incorporating JavaScript programming logic into the webpage. -->
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
       var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
-        // Set result to input value
+        Set result to input value
         var input = document.querySelector("#input-field");
         var result = main(input.value);
 
-        // Display result in output element
+        Display result in output element
         var output = document.querySelector("#output-div");
         output.innerHTML = result;
 
-        // Reset input value
+        Reset input value
         input.value = "";
       });
     </script>
