@@ -31,7 +31,7 @@ var iceCreamBuffet = function (numTrips) {
   var mlPerContainer = 400;
   var numContainersPerCup = mlPerCup / mlPerContainer;
   var numContainersConsumed = numTrips * numCupsPerTrip * numContainersPerCup;
-  return `If you make ${numTrips} trips to the ice cream station and pick up 1 70ml cup each trip, you would consume ${numContainersConsumed} 400ml containers of ice cream total.`;
+  return `If you make ${numTrips} trips to the ice cream station and pick up 1 70ml cup each trip, you would consume ${numContainersConsumed.toFixed(2)} 400ml containers of ice cream total.`;
 };
 
 // Time to Type Sonnets
@@ -40,5 +40,5 @@ var timeToTypeSonnets = function (wpmTypingSpeed) {
   var numMinutesToTypeAllWords = numWordsToType / wpmTypingSpeed;
   var hoursPerMinute = 1 / 60;
   var numHoursToTypeAllWords = numMinutesToTypeAllWords * hoursPerMinute;
-  return `At a typing speed of ${wpmTypingSpeed} words per minute, it would take someone ${numHoursToTypeAllWords} hours to type all of Shakespeare's sonnets, or ${numWordsToType} words.`;
+  return `At a typing speed of ${wpmTypingSpeed} words per minute, it would take someone ${numHoursToTypeAllWords.toFixed(2)} hours to type all ${numWordsToType} words of Shakespeare's sonnets.`;
 };
