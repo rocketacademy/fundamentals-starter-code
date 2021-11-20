@@ -1,44 +1,124 @@
-// Minutes in Weeks
-var minutesInWeeks = function (numWeeks) {
-  var daysPerWeek = 7;
-  var hoursPerDay = 24;
-  var minutesPerHour = 60;
-  var numMinutes = numWeeks * daysPerWeek * hoursPerDay * minutesPerHour;
-  return 'In ' + numWeeks + ' weeks there are ' + numMinutes + ' minutes! Wow!';
+/**
+ * Cost of Air Con
+ */
+var costOfAirCon = function (numHoursUsingAircon) {
+  var numKwForAircon = 2;
+  var costPerKwHour = 0.2;
+  var costOfElectricity = numKwForAircon * numHoursUsingAircon * costPerKwHour;
+  return `It would cost $${costOfElectricity} to use aircon for ${numHoursUsingAircon} hours.`;
 };
 
-// Fahrenheit to Celsius
-var fahrenheitToCelsius = function (tempInFahrenheit) {
-  var tempInCelsius = (tempInFahrenheit - 32) * (5 / 9);
-  return `${tempInFahrenheit} degrees Fahrenheit is ${tempInCelsius} degrees Celsius.`;
+/**
+ * Screen Time
+ */
+var screenTime = function (numHoursPerDayOnApp) {
+  var numDaysPerYear = 365;
+  var numHoursInYearOnApp = numHoursPerDayOnApp * numDaysPerYear;
+
+  var numYearsInLifetime = 82;
+  var numHoursInLifetimeOnApp = numHoursInYearOnApp * numYearsInLifetime;
+
+  var numHoursPerDay = 24;
+  var numDaysInLifetimeOnApp = numHoursInLifetimeOnApp / numHoursPerDay;
+
+  return `If one spends ${numHoursPerDayOnApp} hours per day on one's favourite app, one would be spending ${numDaysInLifetimeOnApp} days in one's lifetime on this app.`;
 };
 
-// Road Trip Cost
-var roadTripCost = function (tripLengthInKm) {
-  var numKmPerLitreOfPetrol = 9;
-  var numLitresOfPetrolNeeded = tripLengthInKm / numKmPerLitreOfPetrol;
-  var costPerLitreOfPetrol = 2.2;
-  var costEstimate = numLitresOfPetrolNeeded * costPerLitreOfPetrol;
-  // .toFixed(2) limits the number of decimal places to 2.
-  // You may find it easier to use template literals to create strings instead of the + operator.
-  return `It would cost $${costEstimate.toFixed(2)} to drive your Ferrari ${tripLengthInKm} kilometres.`;
+/**
+ * Cost of Cellular Data
+ */
+var costOfCellularData = function (numGbUsedPerMonth) {
+  var costOf50GbPlan = 19.99;
+  var num50GbPlans = Math.ceil(numGbUsedPerMonth / 50);
+  var amountPaidPerMonth = num50GbPlans * costOf50GbPlan;
+  var costPerGbUsed = amountPaidPerMonth / numGbUsedPerMonth;
+  return `If one used ${numGbUsedPerMonth} GBs of data per month, one would be purchasing ${num50GbPlans} 50 GB plans and paying $${costPerGbUsed.toFixed(2)} per GB used.`;
 };
 
-// Ice Cream Buffet
-var iceCreamBuffet = function (numTrips) {
-  var numCupsPerTrip = 1;
-  var mlPerCup = 70;
-  var mlPerContainer = 400;
-  var numContainersPerCup = mlPerCup / mlPerContainer;
-  var numContainersConsumed = numTrips * numCupsPerTrip * numContainersPerCup;
-  return `If you make ${numTrips} trips to the ice cream station and pick up 1 70ml cup each trip, you would consume ${numContainersConsumed.toFixed(2)} 400ml containers of ice cream total.`;
+/**
+ * Ice Machine
+ */
+var calcNumIceCubesNeeded = function (numGuests) {
+  var numDrinksPerGuest = 2;
+  var numIceCubesPerDrink = 4;
+  return numGuests * numDrinksPerGuest * numIceCubesPerDrink;
 };
 
-// Time to Type Sonnets
-var timeToTypeSonnets = function (wpmTypingSpeed) {
-  var numWordsToType = 17677;
-  var numMinutesToTypeAllWords = numWordsToType / wpmTypingSpeed;
-  var hoursPerMinute = 1 / 60;
-  var numHoursToTypeAllWords = numMinutesToTypeAllWords * hoursPerMinute;
-  return `At a typing speed of ${wpmTypingSpeed} words per minute, it would take someone ${numHoursToTypeAllWords.toFixed(2)} hours to type all ${numWordsToType} words of Shakespeare's sonnets.`;
+var calcNumPoundsOfIceFromCubes = function (numCubes) {
+  var numGramsPerCube = 1.5;
+  var numPoundsPerGram = 1 / 454;
+  return numCubes * numGramsPerCube * numPoundsPerGram;
+};
+
+var calcNumHoursNeededToProduceIce = function (numPoundsOfIce) {
+  var numPoundsOfIceProducedPerHour = 5;
+  return numPoundsOfIce / numPoundsOfIceProducedPerHour;
+};
+
+var iceMachine = function (numGuests) {
+  var numIceCubesNeeded = calcNumIceCubesNeeded(numGuests);
+  var numPoundsOfIceNeeded = calcNumPoundsOfIceFromCubes(numIceCubesNeeded);
+  var numHoursNeededToProduceIce = calcNumHoursNeededToProduceIce(numPoundsOfIceNeeded);
+  return `The hotel would need to run the ice machine for ${numHoursNeededToProduceIce} hours to produce enough ice for ${numGuests} guests.`;
+};
+
+/**
+ * Beer Order
+ */
+var calcNumPintsPerQuarter = function (numCustomersPerDay) {
+  var daysInQuarterYear = 91;
+  var numCustomersPerQuarter = numCustomersPerDay * daysInQuarterYear;
+  var avgNumPintsPerVisit = 2;
+  var avgNumVisitsPerQuarter = 2;
+  return numCustomersPerQuarter * avgNumPintsPerVisit * avgNumVisitsPerQuarter;
+};
+
+var convertPintsToKegs = function (numPints) {
+  var numKegsPerPint = 1 / 124;
+  return numPints * numKegsPerPint;
+};
+
+var beerOrder = function (avgNumCustomersPerDay) {
+  const numPintsPerQuarter = calcNumPintsPerQuarter(avgNumCustomersPerDay);
+  const numKegsPerQuarter = convertPintsToKegs(numPintsPerQuarter);
+  return `The bar would need to buy ${numKegsPerQuarter} kegs of beer per quarter for an average of ${avgNumCustomersPerDay} customers per day.`;
+};
+
+/**
+ * Mortgage Calculator
+ */
+var calcTotalPaybackAmt = function (principalAmt, loanDurationInYears) {
+  var apr = 0.03;
+  return principalAmt * ((1 + apr) ** loanDurationInYears);
+};
+
+var calcMonthlyPaymentAmt = function (totalAmt, loanDurationInYears) {
+  var numMonthsInYear = 12;
+  return totalAmt / loanDurationInYears / numMonthsInYear;
+};
+
+var mortgageCalculator = function (loanAmount) {
+  var loanDurationInYears = 10;
+  var totalPaybackAmt = calcTotalPaybackAmt(loanAmount, loanDurationInYears);
+  var totalInterestAmt = totalPaybackAmt - loanAmount;
+  var monthlyPaymentAmt = calcMonthlyPaymentAmt(totalPaybackAmt, loanDurationInYears);
+  return `For a mortgage loan of $${loanAmount}, the customer would pay back a total of $${totalPaybackAmt} over 10 years. \n
+    The customer would pay a total of $${totalInterestAmt} in interest. \n
+    The customer would pay a $${monthlyPaymentAmt} over the loan duration.`;
+};
+
+/**
+ * Instructions:
+ * Each group of functions under a "/**" comment above represents 1 exercise, and
+ * each function within the following main function represents 1 exercise.
+ * Uncomment 1 function at a time and comment out all others to
+ * execute the code for the relevant exercise.
+ */
+var main = function (input) {
+  return costOfAirCon(input);
+  // return screenTime(input);
+  // return costOfCellularData(input);
+  // return iceMachine(input);
+  // return beerOrder(input);
+  // return mortgageCalculator(input);
 };

@@ -65,49 +65,58 @@ The <html> element is known as the root element of a HTML page. All other elemen
     <h1 id="header">Basics! 🚀</h1>
     <!-- The <div> tag defines a division or a section in an HTML document, and is commonly use as a "container" for nested HTML elements. -->
     <div id="container">
-      <h2>Minutes in Weeks:</h2>
+      <h2>Cost of Air Con:</h2>
       <p>Input</p>
-      <input id="mins-in-week" />
+      <input id="cost-of-aircon" />
       <br />
-      <button id="mins-in-week-button">Submit</button>
+      <button id="cost-of-aircon-button">Submit</button>
       <p>Output:</p>
-      <div id="mins-in-week-output" class="output"></div>
+      <div id="cost-of-aircon-output" class="output"></div>
     </div>
     <div id="container">
-      <h2>Fahrenheit to Celsius:</h2>
+      <h2>Screen Time:</h2>
       <p>Input:</p>
-      <input id="fahren-to-cels" />
+      <input id="screen-time" />
       <br />
-      <button id="fahren-to-cels-button">Submit</button>
+      <button id="screen-time-button">Submit</button>
       <p>Output:</p>
-      <div id="fahren-to-cels-output" class="output"></div>
+      <div id="screen-time-output" class="output"></div>
     </div>
     <div id="container">
-      <h2>Road Trip Cost:</h2>
+      <h2>Ice Machine:</h2>
       <p>Input:</p>
-      <input id="road-trip-cost" />
+      <input id="ice-machine" />
       <br />
-      <button id="road-trip-cost-button">Submit</button>
+      <button id="ice-machine-button">Submit</button>
       <p>Output:</p>
-      <div id="road-trip-cost-output" class="output"></div>
+      <div id="ice-machine-output" class="output"></div>
     </div>
     <div id="container">
-      <h2>Ice Cream Buffet:</h2>
+      <h2>Beer Order:</h2>
       <p>Input:</p>
-      <input id="ice-cream-buffet" />
+      <input id="beer-orders" />
       <br />
-      <button id="ice-cream-buffet-button">Submit</button>
+      <button id="beer-orders-button">Submit</button>
       <p>Output:</p>
-      <div id="ice-cream-buffet-output" class="output"></div>
+      <div id="beer-orders-output" class="output"></div>
     </div>
     <div id="container">
-      <h2>Time to Type Sonnets:</h2>
+      <h2>Cost of Cellular Data:</h2>
       <p>Input:</p>
-      <input id="sonnets-time" />
+      <input id="cellular-data" />
       <br />
-      <button id="sonnets-time-button">Submit</button>
+      <button id="cellular-data-button">Submit</button>
       <p>Output:</p>
-      <div id="sonnets-time-output" class="output"></div>
+      <div id="cellular-data-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Mortgage Calculator:</h2>
+      <p>Input:</p>
+      <input id="mortgage-calculator" />
+      <br />
+      <button id="mortgage-calculator-button">Submit</button>
+      <p>Output:</p>
+      <div id="mortgage-calculator-output" class="output"></div>
     </div>
     <!-- Everything below this is incorporating JavaScript programming logic into the webpage. -->
     <!-- The script tag encloses JavaScript syntax for the browser to interpret programtically -->
@@ -115,45 +124,53 @@ The <html> element is known as the root element of a HTML page. All other elemen
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
-      var button1 = document.querySelector("#mins-in-week-button");
+      var button1 = document.querySelector("#cost-of-aircon-button");
       button1.addEventListener("click", function () {
-        var input1 = document.querySelector("#mins-in-week");
-        var result1 = minutesInWeeks(input1.value);
-        var output1 = document.querySelector("#mins-in-week-output");
+        var input1 = document.querySelector("#cost-of-aircon");
+        var result1 = costOfAirCon(input1.value);
+        var output1 = document.querySelector("#cost-of-aircon-output");
         output1.innerHTML = result1;
         input1.value = "";
       });
-      var button2 = document.querySelector("#fahren-to-cels-button");
+      var button2 = document.querySelector("#screen-time-button");
       button2.addEventListener("click", function () {
-        var input2 = document.querySelector("#fahren-to-cels");
-        var result2 = fahrenheitToCelsius(input2.value);
-        var output2 = document.querySelector("#fahren-to-cels-output");
+        var input2 = document.querySelector("#screen-time");
+        var result2 = screenTime(input2.value);
+        var output2 = document.querySelector("#screen-time-output");
         output2.innerHTML = result2;
         input2.value = "";
       });
-      var button3 = document.querySelector("#road-trip-cost-button");
+      var button3 = document.querySelector("#cellular-data-button");
       button3.addEventListener("click", function () {
-        var input3 = document.querySelector("#road-trip-cost");
-        var result3 = roadTripCost(input3.value);
-        var output3 = document.querySelector("#road-trip-cost-output");
+        var input3 = document.querySelector("#cellular-data");
+        var result3 = costOfCellularData(input3.value);
+        var output3 = document.querySelector("#cellular-data-output");
         output3.innerHTML = result3;
         input3.value = "";
       });
-      var button4 = document.querySelector("#ice-cream-buffet-button");
+      var button4 = document.querySelector("#ice-machine-button");
       button4.addEventListener("click", function () {
-        var input4 = document.querySelector("#ice-cream-buffet");
-        var result4 = iceCreamBuffet(input4.value);
-        var output4 = document.querySelector("#ice-cream-buffet-output");
+        var input4 = document.querySelector("#ice-machine");
+        var result4 = iceMachine(input4.value);
+        var output4 = document.querySelector("#ice-machine-output");
         output4.innerHTML = result4;
         input4.value = "";
       });
-      var button5 = document.querySelector("#sonnets-time-button");
+      var button5 = document.querySelector("#beer-orders-button");
       button5.addEventListener("click", function () {
-        var input5 = document.querySelector("#sonnets-time");
-        var result5 = timeToTypeSonnets(input5.value);
-        var output5 = document.querySelector("#sonnets-time-output");
+        var input5 = document.querySelector("#beer-orders");
+        var result5 = beerOrder(input5.value);
+        var output5 = document.querySelector("#beer-orders-output");
         output5.innerHTML = result5;
         input5.value = "";
+      });
+      var button6 = document.querySelector("#mortgage-calculator-button");
+      button6.addEventListener("click", function () {
+        var input6 = document.querySelector("#mortgage-calculator");
+        var result6 = mortgageCalculator(input6.value);
+        var output6 = document.querySelector("#mortgage-calculator-output");
+        output6.innerHTML = result6;
+        input6.value = "";
       });
     </script>
   </body>
