@@ -66,11 +66,10 @@ var iceMachine = function (numGuests) {
  * Beer Order
  */
 var calcNumPintsPerQuarter = function (numCustomersPerDay) {
-  var daysInQuarterYear = 91;
+  var daysInQuarterYear = (52 / 4) * 7;
   var numCustomersPerQuarter = numCustomersPerDay * daysInQuarterYear;
   var avgNumPintsPerVisit = 2;
-  var avgNumVisitsPerQuarter = 2;
-  return numCustomersPerQuarter * avgNumPintsPerVisit * avgNumVisitsPerQuarter;
+  return numCustomersPerQuarter * avgNumPintsPerVisit;
 };
 
 var convertPintsToKegs = function (numPints) {
