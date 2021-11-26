@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basics</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+
+      #header {
+        text-align: center;
+      }
+
+      #container {
+        background-color: pink;
+        margin: 40px auto;
+        max-width: 800px;
+        padding: 38px 31px;
+        border-radius: 3%;
+        box-shadow: 2px 2px 2px 2px grey;
+      }
+
+      input {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 9px;
+        width: 100%;
+      }
+
+      button {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 6px;
+        border-radius: 10%;
+      }
+
+      .output {
+        background-color: lightgrey;
+        margin: 20px auto;
+        padding: 20px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="header">Basics! 🚀</h1>
+    <div id="container">
+      <h2>Secret Word:</h2>
+      <p>Input</p>
+      <input id="secret-word" />
+      <br />
+      <button id="secret-word-button">Submit</button>
+      <p>Output:</p>
+      <div id="secret-word-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Secret Word Twice in a Row:</h2>
+      <p>Input:</p>
+      <input id="secret-twice" />
+      <br />
+      <button id="secret-twice-button">Submit</button>
+      <p>Output:</p>
+      <div id="secret-twice-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Secret Word X in a Row:</h2>
+      <p>Input:</p>
+      <input id="secret-x" />
+      <br />
+      <button id="secret-x-button">Submit</button>
+      <p>Output:</p>
+      <div id="secret-x-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Dice Within:</h2>
+      <p>Input:</p>
+      <input id="dice-within" />
+      <br />
+      <button id="dice-within-button">Submit</button>
+      <p>Output:</p>
+      <div id="dice-within-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Dice Within with 2 Dice:</h2>
+      <p>Input:</p>
+      <input id="dice-within-2" />
+      <br />
+      <button id="dice-within-2-button">Submit</button>
+      <p>Output:</p>
+      <div id="dice-within-2-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Dice 4D:</h2>
+      <p>Input:</p>
+      <input id="dice-4d" />
+      <br />
+      <button id="dice-4d-button">Submit</button>
+      <p>Output:</p>
+      <div id="dice-4d-output" class="output"></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      var button1 = document.querySelector("#secret-word-button");
+      button1.addEventListener("click", function () {
+        var input1 = document.querySelector("#secret-word");
+        var result1 = playSecretWord(input1.value);
+        var output1 = document.querySelector("#secret-word-output");
+        output1.innerHTML = result1;
+        input1.value = "";
+      });
+      var button2 = document.querySelector("#secret-twice-button");
+      button2.addEventListener("click", function () {
+        var input2 = document.querySelector("#secret-twice");
+        var result2 = playSecretWordTwiceInARow(input2.value);
+        var output2 = document.querySelector("#secret-twice-output");
+        output2.innerHTML = result2;
+        input2.value = "";
+      });
+      var button3 = document.querySelector("#secret-x-button");
+      button3.addEventListener("click", function () {
+        var input3 = document.querySelector("#secret-x");
+        var result3 = playSecretWordXInARow(input3.value);
+        var output3 = document.querySelector("#secret-x-output");
+        output3.innerHTML = result3;
+        input3.value = "";
+      });
+      var button4 = document.querySelector("#dice-within-button");
+      button4.addEventListener("click", function () {
+        var input4 = document.querySelector("#dice-within");
+        var result4 = diceWithin(input4.value);
+        var output4 = document.querySelector("#dice-within-output");
+        output4.innerHTML = result4;
+        input4.value = "";
+      });
+      var button5 = document.querySelector("#dice-within-2-button");
+      button5.addEventListener("click", function () {
+        var input5 = document.querySelector("#dice-within-2");
+        var result5 = diceWithinWith2Dice(input5.value);
+        var output5 = document.querySelector("#dice-within-2-output");
+        output5.innerHTML = result5;
+        input5.value = "";
+      });
+      var button6 = document.querySelector("#dice-4d-button");
+      button6.addEventListener("click", function () {
+        var input6 = document.querySelector("#dice-4d");
+        var result6 = dice4d(input6.value);
+        var output6 = document.querySelector("#dice-4d-output");
+        output6.innerHTML = result6;
+        input6.value = "";
+      });
+    </script>
+  </body>
+</html>
