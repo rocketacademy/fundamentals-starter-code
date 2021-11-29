@@ -52,6 +52,46 @@ var playerTurn = function() {
   return outputValue;
 }
 
+
+var playerChoice = function(diceNumber) {
+  // if user choose 1, we will print out the rolls in the current order
+  // if user chooses 2, we will swap the dice rolls and print that out instead
+  var playersNumber = `${playerRolls[turnCounter]}${playerRolls[turnCounter+1]}`;
+  if (diceNumber == 2) {
+    console.log("Control flow checking: user input 2");
+    playersNumber = `${playerRolls[turnCounter+1]}${playerRolls[turnCounter]}`;
+    console.log(`playerRolls is now ${playerRolls}`);
+  }
+  var message = `Player ${turnCounter+1} chose ${diceNumber}. Your number is ${playersNumber}`;
+  // add to chosen numbers array
+  playersChosenNumbers.push(playersNumber);
+  // change game mode depending on curren turn.
+  if (turnCounter == 0) {
+    // reset gameState to roll
+    gameState = 'ROLL';
+  }
+  if (turnCounter == 1) {
+    gameState = 'COMPARE';
+  }
+  // increment turn counter.
+  turnCounter += 1;
+  return message;
+}
+
+var compareNumbers = function() {
+  var message = '';
+  if (Number(playersChosenNumbers[0]) > Number(playersChosenNumbers[1])) {
+    message = 'Player 1 wins';
+  }
+  if (Number(playersChosenNumbers[1]) > Number(playersChosenNumbers[0])) {
+    message = 'Player 2 wins';
+  }
+  if (Number(playersChosenNumbers[1]) == Number(playersChosenNumbers[2])) {
+    message = 'Tie!';
+  }
+  return message;
+}
+
 var main = function(input) {
   // initialise output to an empty string
   var outputValue = '';
@@ -72,36 +112,12 @@ var main = function(input) {
   }
   if (gameState == 'CHOOSE') {
     console.log("Control flow checking: we are in choose mode.")
-    // if user choose 1, we will print out the rolls in the current order
-    // if user chooses 2, we will swap the dice rolls and print that out instead
-    var playersNumber = `${playerRolls[turnCounter]}${playerRolls[turnCounter+1]}`;
-    if (input == 2) {
-      console.log("Control flow checking: user input 2");
-      playersNumber = `${playerRolls[turnCounter+1]}${playerRolls[turnCounter]}`;
-      console.log(`playerRolls is now ${playerRolls}`);
-    }
-    outputValue = `Player ${turnCounter+1} chose ${input}. Your number is ${playersNumber}`;
-    playersChosenNumbers.push(playersNumber);
-    if (turnCounter == 0) {
-      // reset gameState to roll
-      gameState = 'ROLL';
-    }
-    if (turnCounter == 1) {
-      gameState = 'COMPARE';
-    }
-    turnCounter += 1;
+    outputValue = playerChoice(input);
     return outputValue;
   }
   if (gameState == 'COMPARE') {
-    if (Number(playersChosenNumbers[0]) > Number(playersChosenNumbers[1])) {
-      outputValue = 'Player 1 wins';
-    }
-    if (Number(playersChosenNumbers[1]) > Number(playersChosenNumbers[2])) {
-      outputValue = 'Player 2 wins';
-    }
-    if (Number(playersChosenNumbers[1]) == Number(playersChosenNumbers[2])) {
-      outputValue = 'Tie!';
-    }
+    console.log("Control flow checking: we are in compare mode");
+    outputValue = compareNumbers();
     return outputValue;
   }
 }
