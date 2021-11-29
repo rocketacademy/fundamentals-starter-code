@@ -30,6 +30,8 @@ var playerRolls = []
 var gameState = 'ROLL';
 // variable to track player's turn, initialised to 0
 var turnCounter = 0;
+// array to store and compare player numbers
+var playersChosenNumbers = [];
 
 // Simulates a dice roll and returns a number between 1 to 6
 var rollDice = function() {
@@ -60,6 +62,7 @@ var main = function(input) {
     if (turnCounter == 2) { 
       // reset playerRolls array to be empty
       playerRolls = [];
+      playersChosenNumbers = [];
       turnCounter = 0;
     }
     // get result of rolled dices
@@ -78,10 +81,27 @@ var main = function(input) {
       console.log(`playerRolls is now ${playerRolls}`);
     }
     outputValue = `Player ${turnCounter+1} chose ${input}. Your number is ${playersNumber}`;
+    playersChosenNumbers.push(playersNumber);
+    if (turnCounter == 0) {
+      // reset gameState to roll
+      gameState = 'ROLL';
+    }
+    if (turnCounter == 1) {
+      gameState = 'COMPARE';
+    }
     turnCounter += 1;
-    // reset gameState to roll
-    gameState = 'ROLL';
+    return outputValue;
   }
-  console.log(`playerRolls array is ${playerRolls} at the end of main()`);
-  return outputValue;
+  if (gameState == 'COMPARE') {
+    if (Number(playersChosenNumbers[0]) > Number(playersChosenNumbers[1])) {
+      outputValue = 'Player 1 wins';
+    }
+    if (Number(playersChosenNumbers[1]) > Number(playersChosenNumbers[2])) {
+      outputValue = 'Player 2 wins';
+    }
+    if (Number(playersChosenNumbers[1]) == Number(playersChosenNumbers[2])) {
+      outputValue = 'Tie!';
+    }
+    return outputValue;
+  }
 }
