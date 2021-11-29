@@ -33,7 +33,14 @@ var rollDice = function() {
 }
 
 var main = function(input) {
-  var rollOne = rollDice();
-  var rollTwo = rollDice();
-  return `You rolled ${rollOne} and ${rollTwo}`;
+  // initiliase an array to store dice rolls
+  var playerRolls = []
+  // initialise output to an empty string
+  var outputValue = '';
+  // roll two dice and store in an array
+  playerRolls.push(rollDice());
+  playerRolls.push(rollDice());
+
+  outputValue = `You rolled ${playerRolls[0]} and ${playerRolls[1]}`;
+  return outputValue;
 }
