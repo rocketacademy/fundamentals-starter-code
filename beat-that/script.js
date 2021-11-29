@@ -86,6 +86,10 @@ var main = function(input) {
   }
   if (gameState == 'CHOOSE') {
     console.log("Control flow checking: we are in choose mode.")
+    // input validation
+    if (input != 1 && input != 2) {
+      return 'Please input either 1 or 2';
+    }
     outputValue = playerChoice(input);
     return outputValue;
   }
