@@ -23,7 +23,17 @@ HELPER FUNCTIONS:
 2) Checking for winner
 */
 
+// Simulates a dice roll and returns a number between 1 to 6
+var rollDice = function() {
+  console.log("Control Flow Checking: Currently in rollDice function")
+  var randomDecimal = Math.random() * 6;
+  var randomInteger = Math.floor(randomDecimal) + 1;
+  console.log(`rollDice returning ${randomInteger}`);
+  return randomInteger;
+}
 
 var main = function(input) {
-  return `Hello World!`;
+  var rollOne = rollDice();
+  var rollTwo = rollDice();
+  return `You rolled ${rollOne} and ${rollTwo}`;
 }
