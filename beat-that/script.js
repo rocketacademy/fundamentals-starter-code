@@ -24,10 +24,12 @@ HELPER FUNCTIONS:
 */
 
 
-// initiliase an array to store dice rolls
+// initiliase an array to store dice rolls, we will use this for both player one and player two's dice rolls. player one's rolls will be index 0 and 1, player two's rolls will be indexed 2 and 3.
 var playerRolls = []
 // variable to track game state, initialised to ROLL, will change to CHOOSE
 var gameState = 'ROLL';
+// variable to track player's turn, initialised to 1 for player 1 to start
+var turnCounter = 1;
 
 // Simulates a dice roll and returns a number between 1 to 6
 var rollDice = function() {
@@ -44,7 +46,8 @@ var playerTurn = function() {
   playerRolls.push(rollDice());
   playerRolls.push(rollDice());
   console.log(`playerRolls array is ${playerRolls} at the end of playerTurn()`);
-  return `You rolled ${playerRolls[0]} and ${playerRolls[1]}. Please input '1' or '2' to choose which die to be the first number.`;
+  outputValue = `Welcome Player ${turnCounter}. You rolled ${playerRolls[turnCounter-1]} and ${playerRolls[turnCounter]}. Please input '1' or '2' to choose which die to be the first number.`;
+  return outputValue;
 }
 
 var main = function(input) {
@@ -53,6 +56,12 @@ var main = function(input) {
   
   if (gameState == 'ROLL') {
     console.log("Control flow checking: we are in roll mode.")
+    // if the second player just rolled, reset the array and counter 
+    if (turnCounter == 3) { 
+      // reset playerRolls array to be empty
+      playerRolls = [];
+      turnCounter = 1;
+    }
     // get result of rolled dices
     outputValue = playerTurn();
     gameState = 'CHOOSE';
@@ -60,8 +69,17 @@ var main = function(input) {
   }
   if (gameState == 'CHOOSE') {
     console.log("Control flow checking: we are in choose mode.")
-    // reset playerRolls array to be empty
-    playerRolls = [];
+    // if user choose 1, we will print out the rolls in the current order
+    // if user chooses 2, we will swap the dice rolls and print that out instead
+    if (input == 2) {
+      console.log("Control flow checking: user input 2");
+      playerRolls.push(playerRolls.shift())
+      console.log(`playerRolls is now ${playerRolls}`);
+    }
+    outputValue = `Player ${turnCounter} chose ${input}. Your number is ${playerRolls[0]}${playerRolls[1]}`;
+    turnCounter += 1;
+    // reset gameState to roll
+    gameState = 'ROLL';
   }
   console.log(`playerRolls array is ${playerRolls} at the end of main()`);
   return outputValue;
