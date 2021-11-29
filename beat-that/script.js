@@ -23,6 +23,10 @@ HELPER FUNCTIONS:
 2) Checking for winner
 */
 
+
+// initiliase an array to store dice rolls
+var playerRolls = []
+
 // Simulates a dice roll and returns a number between 1 to 6
 var rollDice = function() {
   console.log("Control Flow Checking: Currently in rollDice function")
@@ -32,15 +36,22 @@ var rollDice = function() {
   return randomInteger;
 }
 
-var main = function(input) {
-  // initiliase an array to store dice rolls
-  var playerRolls = []
-  // initialise output to an empty string
-  var outputValue = '';
+var playerTurn = function() {
+  console.log("Control Flow Checking: Currently in playerTurn function")
   // roll two dice and store in an array
   playerRolls.push(rollDice());
   playerRolls.push(rollDice());
+  console.log(`playerRolls array is ${playerRolls} at the end of playerTurn()`);
+  return `You rolled ${playerRolls[0]} and ${playerRolls[1]}`;
+}
 
-  outputValue = `You rolled ${playerRolls[0]} and ${playerRolls[1]}`;
+var main = function(input) {
+  // initialise output to an empty string
+  var outputValue = '';
+  // get result of rolled dices
+  outputValue = playerTurn();
+  // reset playerRolls array to be empty
+  playerRolls = [];
+  console.log(`playerRolls array is ${playerRolls} at the end of main()`);
   return outputValue;
 }
