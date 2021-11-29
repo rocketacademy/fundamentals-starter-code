@@ -26,6 +26,8 @@ HELPER FUNCTIONS:
 
 // initiliase an array to store dice rolls
 var playerRolls = []
+// variable to track game state, initialised to ROLL, will change to CHOOSE
+var gameState = 'ROLL';
 
 // Simulates a dice roll and returns a number between 1 to 6
 var rollDice = function() {
@@ -42,16 +44,25 @@ var playerTurn = function() {
   playerRolls.push(rollDice());
   playerRolls.push(rollDice());
   console.log(`playerRolls array is ${playerRolls} at the end of playerTurn()`);
-  return `You rolled ${playerRolls[0]} and ${playerRolls[1]}`;
+  return `You rolled ${playerRolls[0]} and ${playerRolls[1]}. Please input '1' or '2' to choose which die to be the first number.`;
 }
 
 var main = function(input) {
   // initialise output to an empty string
   var outputValue = '';
-  // get result of rolled dices
-  outputValue = playerTurn();
-  // reset playerRolls array to be empty
-  playerRolls = [];
+  
+  if (gameState == 'ROLL') {
+    console.log("Control flow checking: we are in roll mode.")
+    // get result of rolled dices
+    outputValue = playerTurn();
+    gameState = 'CHOOSE';
+    return outputValue;
+  }
+  if (gameState == 'CHOOSE') {
+    console.log("Control flow checking: we are in choose mode.")
+    // reset playerRolls array to be empty
+    playerRolls = [];
+  }
   console.log(`playerRolls array is ${playerRolls} at the end of main()`);
   return outputValue;
 }
