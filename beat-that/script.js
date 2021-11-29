@@ -43,6 +43,7 @@ var playerChoice = function(diceNumber) {
   if (turnCounter == 0) {
     // reset gameState to roll
     gameState = 'ROLL';
+    message += '<br><br>' + 'It is now Player 2s turn. Hit Submit to roll your dice.';
   }
   if (turnCounter == 1) {
     gameState = 'COMPARE';
@@ -55,10 +56,10 @@ var playerChoice = function(diceNumber) {
 var compareNumbers = function() {
   var message = '';
   if (Number(playersChosenNumbers[0]) > Number(playersChosenNumbers[1])) {
-    message = 'Player 1 wins';
+    message = 'Player 1 wins!';
   }
   if (Number(playersChosenNumbers[1]) > Number(playersChosenNumbers[0])) {
-    message = 'Player 2 wins';
+    message = 'Player 2 wins!';
   }
   if (Number(playersChosenNumbers[1]) == Number(playersChosenNumbers[2])) {
     message = 'Tie!';
@@ -72,9 +73,8 @@ var main = function(input) {
   
   if (gameState == 'ROLL') {
     console.log("Control flow checking: we are in roll mode.")
-    // if the second player just rolled, reset the array and counter 
+    // if the second player just rolled, reset globals 
     if (turnCounter == 2) { 
-      // reset global variables
       playerRolls = [];
       playersChosenNumbers = [];
       turnCounter = 0;
