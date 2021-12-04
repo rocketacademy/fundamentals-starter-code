@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basics</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+
+      #header {
+        text-align: center;
+      }
+
+      #container {
+        background-color: pink;
+        margin: 40px auto;
+        max-width: 800px;
+        padding: 38px 31px;
+        border-radius: 3%;
+        box-shadow: 2px 2px 2px 2px grey;
+      }
+
+      input {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 9px;
+        width: 100%;
+      }
+
+      button {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 6px;
+        border-radius: 10%;
+      }
+
+      .output {
+        background-color: lightgrey;
+        margin: 20px auto;
+        padding: 20px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="header">Basics! 🚀</h1>
+    <div id="container">
+      <h2>Number of Characters:</h2>
+      <p>Input</p>
+      <input id="number-of-characters" />
+      <br />
+      <button id="number-of-characters-button">Submit</button>
+      <p>Output:</p>
+      <div id="number-of-characters-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Square:</h2>
+      <p>Input:</p>
+      <input id="square" />
+      <br />
+      <button id="square-button">Submit</button>
+      <p>Output:</p>
+      <div id="square-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Triangle:</h2>
+      <p>Input:</p>
+      <input id="triangle" />
+      <br />
+      <button id="triangle-button">Submit</button>
+      <p>Output:</p>
+      <div id="triangle-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Outline Square:</h2>
+      <p>Input:</p>
+      <input id="outline-square" />
+      <br />
+      <button id="outline-square-button">Submit</button>
+      <p>Output:</p>
+      <div id="outline-square-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Center Square:</h2>
+      <p>Input:</p>
+      <input id="center-square" />
+      <br />
+      <button id="center-square-button">Submit</button>
+      <p>Output:</p>
+      <div id="center-square-output" class="output"></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      var button1 = document.querySelector("#number-of-characters-button");
+      button1.addEventListener("click", function () {
+        var input1 = document.querySelector("#number-of-characters");
+        var result1 = numberOfCharacters(input1.value);
+        var output1 = document.querySelector("#number-of-characters-output");
+        output1.innerHTML = result1;
+        input1.value = "";
+      });
+      var button2 = document.querySelector("#square-button");
+      button2.addEventListener("click", function () {
+        var input2 = document.querySelector("#square");
+        var result2 = square(input2.value);
+        var output2 = document.querySelector("#square-output");
+        output2.innerHTML = result2;
+        input2.value = "";
+      });
+      var button4 = document.querySelector("#triangle-button");
+      button4.addEventListener("click", function () {
+        var input4 = document.querySelector("#triangle");
+        var result4 = triangle(input4.value);
+        var output4 = document.querySelector("#triangle-output");
+        output4.innerHTML = result4;
+        input4.value = "";
+      });
+      var button5 = document.querySelector("#outline-square-button");
+      button5.addEventListener("click", function () {
+        var input5 = document.querySelector("#outline-square");
+        var result5 = outlineSquare(input5.value);
+        var output5 = document.querySelector("#outline-square-output");
+        output5.innerHTML = result5;
+        input5.value = "";
+      });
+      var button6 = document.querySelector("#center-square-button");
+      button6.addEventListener("click", function () {
+        var input6 = document.querySelector("#center-square");
+        var result6 = centerSquare(input6.value);
+        var output6 = document.querySelector("#center-square-output");
+        output6.innerHTML = result6;
+        input6.value = "";
+      });
+    </script>
+  </body>
+</html>
