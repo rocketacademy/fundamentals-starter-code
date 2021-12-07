@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basics</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+
+      #header {
+        text-align: center;
+      }
+
+      #container {
+        background-color: pink;
+        margin: 40px auto;
+        max-width: 800px;
+        padding: 38px 31px;
+        border-radius: 3%;
+        box-shadow: 2px 2px 2px 2px grey;
+      }
+
+      input {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 9px;
+        width: 100%;
+      }
+
+      button {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 6px;
+        border-radius: 10%;
+      }
+
+      .output {
+        background-color: lightgrey;
+        margin: 20px auto;
+        padding: 20px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="header">Basics! 🚀</h1>
+    <div id="container">
+      <h2>Mad Libs (Base):</h2>
+      <p>Input</p>
+      <input id="mad-libs-base" />
+      <br />
+      <button id="mad-libs-base-button">Submit</button>
+      <p>Output:</p>
+      <div id="mad-libs-base-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Multiple Word Types:</h2>
+      <p>Input:</p>
+      <input id="multiple-word" />
+      <br />
+      <button id="multiple-word-button">Submit</button>
+      <p>Output:</p>
+      <div id="multiple-word-output" class="output"></div>
+    </div>
+    <div id="container">
+      <h2>Popular Mad Libs:</h2>
+      <p>Input:</p>
+      <input id="popular" />
+      <br />
+      <button id="popular-button">Submit</button>
+      <p>Output:</p>
+      <div id="popular-output" class="output"></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      var button1 = document.querySelector("#mad-libs-base-button");
+      button1.addEventListener("click", function () {
+        var input1 = document.querySelector("#mad-libs-base");
+        var result1 = madLibsAdjectives(input1.value);
+        var output1 = document.querySelector("#mad-libs-base-output");
+        output1.innerHTML = result1;
+        input1.value = "";
+      });
+      var button2 = document.querySelector("#multiple-word-button");
+      button2.addEventListener("click", function () {
+        var input2 = document.querySelector("#multiple-word");
+        var result2 = madLibsMultipleWordTypes(input2.value);
+        var output2 = document.querySelector("#multiple-word-output");
+        output2.innerHTML = result2;
+        input2.value = "";
+      });
+      var button3 = document.querySelector("#popular-button");
+      button3.addEventListener("click", function () {
+        var input3 = document.querySelector("#popular");
+        var result3 = popularMadLibs(input3.value);
+        var output3 = document.querySelector("#popular-output");
+        output3.innerHTML = result3;
+        input3.value = "";
+      });
+      var button4 = document.querySelector("#sets-button");
+      button4.addEventListener("click", function () {
+        var input4 = document.querySelector("#sets");
+        var result4 = setsOfMadLibs(input4.value);
+        var output4 = document.querySelector("#sets-output");
+        output4.innerHTML = result4;
+        input4.value = "";
+      });
+    </script>
+  </body>
+</html>
