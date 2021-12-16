@@ -1,7 +1,15 @@
+<!--  All HTML files begin with the following line: -->
 <!DOCTYPE html>
+<!-- This indicates that the rest of the lines that follow are to be interpreted as HTML. It tells the browser about what document type to expect. -->
+
+<!-- All text enclosed in angled brackets are known as HTML element tags. There are usually, but not always, starting and closing element "tags", each representing a HTML element.
+The <html> element is known as the root element of a HTML page. All other elements are encased within it. -->
 <html>
+  <!-- The <head> element contains meta information about the HTML page, information that is not rendered or displayed by the browser -->
   <head>
+    <!-- The <title> element specifies a title for the HTML page (which is shown in the browser's title bar or in the page's tab) and is the default name given to a bookmark of a webpage. -->
     <title>Basics</title>
+    <!-- The <style> element contains information relating to the layout and style of the webpage. The syntax within a <style> tag is referred to as CSS - Cascading Style Sheets. -->
     <style>
       * {
         box-sizing: border-box;
@@ -22,8 +30,6 @@
         margin: 40px auto;
         max-width: 800px;
         padding: 38px 31px;
-        border-radius: 3%;
-        box-shadow: 2px 2px 2px 2px grey;
       }
 
       input {
@@ -39,10 +45,9 @@
         line-height: 33px;
         margin: 0 0 23px 0;
         padding: 0 6px;
-        border-radius: 10%;
       }
 
-      .output {
+      #output-div {
         background-color: lightgrey;
         margin: 20px auto;
         padding: 20px;
@@ -50,77 +55,46 @@
       }
     </style>
   </head>
+
+  <!-- The <body> element defines the document's body, and is a container for all the visible contents that will be rendered by the browser.  -->
   <body>
+    <!-- The <h1> element defines a large heading. There are 6 pre-set header elements, <h1> to <h6> -->
     <h1 id="header">Basics! 🚀</h1>
+    <!-- The <div> tag defines a division or a section in an HTML document, and is commonly use as a "container" for nested HTML elements. -->
     <div id="container">
-      <h2>Multi-Dice Game:</h2>
-      <p>Input</p>
-      <input id="multi-dice-base" />
-      <br />
-      <button id="multi-dice-base-button">Submit</button>
-      <p>Output:</p>
-      <div id="multi-dice-base-output" class="output"></div>
-    </div>
-    <div id="container">
-      <h2>Multi-Round Multi-Dice:</h2>
+      <!-- The <p> tag defines a paragraph element. -->
       <p>Input:</p>
-      <input id="multi-round" />
+      <!-- The self-closing <input /> tag represents a field for a user to enter input. -->
+      <input id="input-field" />
+      <!-- The self-closing <br /> tag represents a line break - a line's worth of spacing before dispalying the next element. -->
       <br />
-      <button id="multi-round-button">Submit</button>
+      <!-- The <button> tag represents.. you guessed it! a button. -->
+      <button id="submit-button">Submit</button>
       <p>Output:</p>
-      <div id="multi-round-output" class="output"></div>
+      <div id="output-div"></div>
     </div>
-    <div id="container">
-      <h2>2 Player Multi-Round:</h2>
-      <p>Input:</p>
-      <input id="two-player" />
-      <br />
-      <button id="two-player-button">Submit</button>
-      <p>Output:</p>
-      <div id="two-player-output" class="output"></div>
-    </div>
-    <div id="container">
-      <h2>Multi-Player Multi-Round Multi-Dice:</h2>
-      <p>Input:</p>
-      <input id="multi-3" />
-      <br />
-      <button id="multi-3-button">Submit</button>
-      <p>Output:</p>
-      <div id="multi-3-output" class="output"></div>
-    </div>
+    <!-- Everything below this is incorporating JavaScript programming logic into the webpage. -->
+    <!-- The script tag encloses JavaScript syntax for the browser to interpret programtically -->
+    <!-- The following line imports all code written in the script.js file -->
     <script src="script.js"></script>
+    <!-- Define button click functionality -->
     <script>
-      var button1 = document.querySelector("#multi-dice-base-button");
-      button1.addEventListener("click", function () {
-        var input1 = document.querySelector("#multi-dice-base");
-        var result1 = multiDiceGame(input1.value);
-        var output1 = document.querySelector("#multi-dice-base-output");
-        output1.innerHTML = result1;
-        input1.value = "";
-      });
-      var button2 = document.querySelector("#multi-round-button");
-      button2.addEventListener("click", function () {
-        var input2 = document.querySelector("#multi-round");
-        var result2 = multiRoundMultiDiceGame(input2.value);
-        var output2 = document.querySelector("#multi-round-output");
-        output2.innerHTML = result2;
-        input2.value = "";
-      });
-      var button3 = document.querySelector("#two-player-button");
-      button3.addEventListener("click", function () {
-        var input3 = document.querySelector("#two-player");
-        var result3 = twoPlayerMultiRoundMultiDiceGame(input3.value);
-        var output3 = document.querySelector("#two-player-output");
-        output3.innerHTML = result3;
-        input3.value = "";
-      });
-      var button4 = document.querySelector("#multi-3-button");
-      button4.addEventListener("click", function () {
-        var input4 = document.querySelector("#multi-3");
-        var result4 = multiPlayerMultiRoundMultiDiceGame(input4.value);
-        var output4 = document.querySelector("#multi-3-output");
-        output4.innerHTML = result4;
-        input4.value = "";
+      // Declare and define a variable that represents the Submit Button
+      var button = document.querySelector("#submit-button");
+      // When the submit button is clicked, access the text entered by the user in the input field
+      // And pass it as an input parameter to the main function as defined in script.js
+      button.addEventListener("click", function () {
+        // Set result to input value
+        var input = document.querySelector("#input-field");
+        // Store the output of main() in a new variable
+        var result = main(input.value);
+
+        // Display result in output element
+        var output = document.querySelector("#output-div");
+        output.innerHTML = result;
+
+        // Reset input value
+        input.value = "";
       });
     </script>
   </body>
