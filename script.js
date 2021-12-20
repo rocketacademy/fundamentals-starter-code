@@ -57,7 +57,33 @@ var makeDeck = function () {
   return cardDeck;
 };
 
-//Shuffle the deck
+//Helper function to generate random index, to be used in the helper function shuffleDeck
+var getRandomIndex = function (max) {
+  return Math.floor(Math.random() * max);
+};
+
+//Shuffle the deck of cards
+var shuffleCards = function (cardDeck) {
+  // Loop over the card deck array once
+  var currentIndex = 0;
+  while (currentIndex < 52) {
+    // Select a random index in the deck
+    var randomIndex = getRandomIndex(52);
+    // Select the card that corresponds to randomIndex
+    var randomCard = cardDeck[randomIndex];
+    //var randomCard = cardDeck[1];
+    // Select the card that corresponds to currentIndex
+    var currentCard = cardDeck[currentIndex];
+    // Swap positions of randomCard and currentCard in the deck
+    cardDeck[currentIndex] = randomCard;
+    cardDeck[randomIndex] = currentCard;
+    // Increment currentIndex
+    currentIndex = currentIndex + 1;
+  }
+  // Return the shuffled deck
+  return cardDeck;
+};
+
 //Deal cards to player and dealer
 //Give player option to hit or stand
 //Calculate score
@@ -68,6 +94,9 @@ var main = function (input) {
 
   var newDeck = makeDeck();
   console.log(newDeck);
+
+  var shuffledDeck = shuffleCards(newDeck);
+  console.log(shuffledDeck);
 
   if (input == "hit") {
     myOutputValue = "The Hit Button has been clicked.";
