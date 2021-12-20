@@ -20,6 +20,7 @@ The <html> element is known as the root element of a HTML page. All other elemen
         margin-left: 30px;
         margin-right: 30px;
         background-color: rgb(32, 97, 81);
+        text-align: center;
       }
 
       #header {
@@ -33,14 +34,7 @@ The <html> element is known as the root element of a HTML page. All other elemen
         padding: 38px 31px;
       }
 
-      input {
-        font-size: 21px;
-        line-height: 33px;
-        margin: 0 0 23px 0;
-        padding: 0 9px;
-        width: 100%;
-      }
-
+      
       button {
         font-size: 21px;
         line-height: 33px;
@@ -49,7 +43,7 @@ The <html> element is known as the root element of a HTML page. All other elemen
       }
 
       #output-div {
-        background-color: rgb(32, 97, 81);
+        background-color: rgb(100, 165, 149);
         margin: 20px auto;
         padding: 20px;
         width: 100%;
@@ -60,18 +54,13 @@ The <html> element is known as the root element of a HTML page. All other elemen
   <!-- The <body> element defines the document's body, and is a container for all the visible contents that will be rendered by the browser.  -->
   <body>
     <!-- The <h1> element defines a large heading. There are 6 pre-set header elements, <h1> to <h6> -->
-    <h1 id="header">Basics! Blackjack Game 2️⃣1️⃣🚀</h1>
-    <p>Let's play Blackjack!</p>
-    <br />
-    <p>Rules of the game:</p>
-    <p>Dealer has to hit if their hand is less than 17</p>
+    <h1 id="header" style="color: white">Basics! Blackjack Game 2️⃣1️⃣🚀</h1>
+        <br />
+    <p style="color:white"> <strong> Rules of the game:</strong></p>
+    <p style="color:white">Dealer has to hit if their hand is less than 17</p>
     <!-- The <div> tag defines a division or a section in an HTML document, and is commonly use as a "container" for nested HTML elements. -->
     <div id="container">
-      <!-- The <p> tag defines a paragraph element. -->
-        
-      <p>Input:</p>
-      <!-- The self-closing <input /> tag represents a field for a user to enter input. -->
-      <input id="input-field" />
+      
       <!-- The self-closing <br /> tag represents a line break - a line's worth of spacing before dispalying the next element. -->
       <br />
       <!-- The <button> tag represents.. you guessed it! a button. -->
@@ -85,7 +74,7 @@ The <html> element is known as the root element of a HTML page. All other elemen
     <!-- Everything below this is incorporating JavaScript programming logic into the webpage. -->
     <!-- The script tag encloses JavaScript syntax for the browser to interpret programtically -->
     <!-- The following line imports all code written in the script.js file -->
-    <script src="script.js"></script>
+    <script src="scriptBlackjack.js"></script>
     <!-- Define button click functionality -->
     <script>
       // Declare and define a variable that represents the Submit Button
@@ -93,7 +82,12 @@ The <html> element is known as the root element of a HTML page. All other elemen
       // When the submit button is clicked, access the text entered by the user in the input field
       // And pass it as an input parameter to the main function as defined in script.js
       startButton.addEventListener("click", function () {
+        // Set result to input value
+        //var input = document.querySelector("#input-field");
+        // Store the output of main() in a new variable
         var result = main("start");
+
+        // Display result in output element
         var output = document.querySelector("#output-div");
         output.innerHTML = result;
 
