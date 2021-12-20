@@ -93,39 +93,45 @@ var shuffleCards = function (cardDeck) {
 // Store player's hand and dealer's hand in a separate array
 var playerHand = [];
 var dealerHand = [];
+var playerScore = 0;
+var dealerScore = 0;
+var newDeck = [];
+var shuffledDeck = [];
 
 var main = function (input) {
-  var myOutputValue = "hello world";
+  //Start the game
+  if (input == "start") {
+    newDeck = makeDeck();
+    console.log(newDeck);
 
-  var newDeck = makeDeck();
-  console.log(newDeck);
+    shuffledDeck = shuffleCards(newDeck);
+    console.log(shuffledDeck);
 
-  var shuffledDeck = shuffleCards(newDeck);
-  console.log(shuffledDeck);
+    //Deal 2 cards each to player and dealer
+    var playerCard1 = shuffledDeck.pop();
+    playerHand.push(playerCard1);
+    console.log("Player Card 1: " + playerCard1);
+    console.log("Player Hand: " + playerHand);
+    var dealerCard1 = shuffledDeck.pop();
+    dealerHand.push(dealerCard1);
+    console.log("Dealer Card 1: " + dealerCard1);
+    console.log("Dealer hand: " + dealerHand);
 
-  //Deal 2 cards each to player and dealer
-  var playerCard1 = shuffledDeck.pop();
-  playerHand.push(playerCard1);
-  console.log("Player Card 1: " + playerCard1);
-  console.log("Player Hand: " + playerHand);
-  var dealerCard1 = shuffledDeck.pop();
-  dealerHand.push(dealerCard1);
-  console.log("Dealer Card 1: " + dealerCard1);
-  console.log("Dealer hand: " + dealerHand);
+    var playerCard2 = shuffledDeck.pop();
+    playerHand.push(playerCard2);
+    console.log(playerCard2);
+    var dealerCard2 = shuffledDeck.pop();
+    dealerHand.push(dealerCard2);
+    console.log(dealerCard2);
 
-  var playerCard2 = shuffledDeck.pop();
-  playerHand.push(playerCard2);
-  console.log(playerCard2);
-  var dealerCard2 = shuffledDeck.pop();
-  dealerHand.push(dealerCard2);
-  console.log(dealerCard2);
-
-  myOutputValue = `Player Card 1 is ${playerCard1.name} of ${playerCard1.suit} <br>
+    myOutputValue = `Player Card 1 is ${playerCard1.name} of ${playerCard1.suit} <br>
   Dealer Card 1 is ${dealerCard1.name} of ${dealerCard1.suit} <br>
   Player Card 2 is ${playerCard2.name} of ${playerCard2.suit} <br>
   Dealer Card 2 is ${dealerCard2.name} of ${dealerCard2.suit}`;
+  } else if (input == "hit") {
+    var newCard = shuffledDeck.pop();
+    playerHand.push(newCard);
 
-  if (input == "hit") {
     myOutputValue = "The Hit Button has been clicked.";
   } else if (input == "stand") {
     myOutputValue = "Stand button has been selected";
