@@ -1,5 +1,4 @@
 //Blackjack game
-//Start game
 
 //Create a deck of card
 var makeDeck = function () {
@@ -84,11 +83,6 @@ var shuffleCards = function (cardDeck) {
   return cardDeck;
 };
 
-//Deal cards to player and dealer
-//Give player option to hit or stand
-//Calculate score
-//Determine who wins
-
 //Global variables
 // Store player's hand and dealer's hand in a separate array
 var playerHand = [];
@@ -112,6 +106,7 @@ var main = function (input) {
     playerHand.push(playerCard1);
     console.log("Player Card 1: " + playerCard1);
     console.log("Player Hand: " + playerHand);
+
     var dealerCard1 = shuffledDeck.pop();
     dealerHand.push(dealerCard1);
     console.log("Dealer Card 1: " + dealerCard1);
@@ -120,23 +115,74 @@ var main = function (input) {
     var playerCard2 = shuffledDeck.pop();
     playerHand.push(playerCard2);
     console.log(playerCard2);
+
     var dealerCard2 = shuffledDeck.pop();
     dealerHand.push(dealerCard2);
     console.log(dealerCard2);
 
+    playerScore = playerCard1.value + playerCard2.value;
+    dealerScore = dealerCard1.value + dealerCard2.value;
+
     myOutputValue = `Player Card 1 is ${playerCard1.name} of ${playerCard1.suit} <br>
+    Player Card 2 is ${playerCard2.name} of ${playerCard2.suit} <br>
+    <br>
   Dealer Card 1 is ${dealerCard1.name} of ${dealerCard1.suit} <br>
-  Player Card 2 is ${playerCard2.name} of ${playerCard2.suit} <br>
-  Dealer Card 2 is ${dealerCard2.name} of ${dealerCard2.suit}`;
+  Dealer Card 2 is ${dealerCard2.name} of ${dealerCard2.suit} <br>
+  <br>
+  Player 1 current score is: ${playerScore} <br>
+  Dealer current score is: ${dealerScore}`;
   } else if (input == "hit") {
     var newCard = shuffledDeck.pop();
     playerHand.push(newCard);
+    playerScore = playerScore + newCard.value;
 
-    myOutputValue = "The Hit Button has been clicked.";
+    //Check if player went over 21
+    if (playerScore > 21) {
+      return "You went bust! sorry, you lost!";
+    }
+
+    myOutputValue = `Player additional card is ${newCard.name} of ${newCard.suit} <br>
+                    Click Hit again or Stand`;
   } else if (input == "stand") {
-    myOutputValue = "Stand button has been selected";
+    //var playerTotal = calculatePlayerScore();
+    //var dealerTotal = getDealerScore();
+
+    //Dealer need to hit if dealer hand is below 17
+    while (dealerScore < 17) {
+      var newCard = shuffledDeck.pop();
+      dealerHand.push(newCard);
+      dealerScore = dealerScore + newCard.value;
+    }
+
+    if (dealerScore > 21) {
+      return "Dealer went bust! YOU WIN!";
+    }
+
+    if (playerScore == dealerScore) {
+      return "It's a draw!";
+    } else if (playerScore < dealerScore) {
+      return `Player score is ${playerScore} <br>
+      Dealer score is ${dealerScore} <br>
+      <br>
+      Player lost`;
+    } else if (playerScore > dealerScore) {
+      return `Player score is ${playerScore} <br>
+      Dealer score is ${dealerScore} <br>
+      <br>
+      Player WINS! CONGRATULATIONS!`;
+    }
+
+    myOutputValue = `Player Score: ${playerTotal} <br>
+    Dealer Score: ${dealerTotal}`;
   } else if (input == "reset") {
-    myOutputValue = "Reset The Game";
+    playerHand = [];
+    dealerHand = [];
+    playerScore = 0;
+    dealerScore = 0;
+    newDeck = [];
+    shuffledDeck = [];
+    myOutputValue = "Game has been reset. <br> Please click Start";
   }
+
   return myOutputValue;
 };
