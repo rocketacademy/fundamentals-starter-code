@@ -126,6 +126,33 @@ var showHands = function () {
   return showPlayerHand + "<br>" + showDealerHand;
 };
 
+//Helper function to show player's score and dealer's score
+var showScores = function () {
+  var index = 0;
+  var showPlayerScore = 0;
+  var showDealerScore = 0;
+
+  while (index < playerHand.length) {
+    showPlayerScore = showPlayerScore + playerHand[index].value;
+    index += 1;
+  }
+  index = 0;
+
+  while (index < dealerHand.length) {
+    showDealerScore = showDealerScore + dealerHand[index].value;
+    index += 1;
+  }
+  index = 0;
+
+  var showScoreMsg =
+    "Player score is " +
+    showPlayerScore +
+    "<br>" +
+    "Dealer score is " +
+    showDealerScore;
+  return showScoreMsg;
+};
+
 var main = function (input) {
   //Start the game
   if (input == "start") {
@@ -157,18 +184,7 @@ var main = function (input) {
     playerScore = playerCard1.value + playerCard2.value;
     dealerScore = dealerCard1.value + dealerCard2.value;
 
-    //var myOutputValue = `Player Card 1 is ${playerCard1.name} of ${playerCard1.suit} <br>
-    //Player Card 2 is ${playerCard2.name} of ${playerCard2.suit} <br>
-    //<br>
-    //Dealer Card 1 is ${dealerCard1.name} of ${dealerCard1.suit} <br>
-    //Dealer Card 2 is ${dealerCard2.name} of ${dealerCard2.suit} <br>
-    //<br>
-    // Player 1 current score is: ${playerScore} <br>
-    //Dealer current score is: ${dealerScore}`;
-
-    // myOutputValue = showHands();
-
-    var outputMsg = showHands();
+    var outputMsg = showHands() + "<br>" + showScores();
     return outputMsg;
   } else if (input == "hit") {
     var newCard = shuffledDeck.pop();
