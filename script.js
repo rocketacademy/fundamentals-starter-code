@@ -92,6 +92,40 @@ var dealerScore = 0;
 var newDeck = [];
 var shuffledDeck = [];
 
+//Helper function to show player's hand and dealer's hand
+var showHands = function () {
+  var index = 0;
+  var showPlayerHand = "Player's Hand: <br>";
+  var showDealerHand = "Dealer's Hand: <br>";
+
+  //Loop through playerHand and show each card
+  while (index < playerHand.length) {
+    showPlayerHand =
+      showPlayerHand +
+      playerHand[index].name +
+      " of " +
+      playerHand[index].suit +
+      "<br>";
+    index += 1;
+  }
+
+  //re-initialize index
+  index = 0;
+  //Loop through dealerHand and show each card
+  while (index < dealerHand.length) {
+    showDealerHand =
+      showDealerHand +
+      dealerHand[index].name +
+      " of " +
+      dealerHand[index].suit +
+      "<br>";
+    index += 1;
+  }
+  //re-set index back to 0
+  index = 0;
+  return showPlayerHand + "<br>" + showDealerHand;
+};
+
 var main = function (input) {
   //Start the game
   if (input == "start") {
@@ -123,14 +157,19 @@ var main = function (input) {
     playerScore = playerCard1.value + playerCard2.value;
     dealerScore = dealerCard1.value + dealerCard2.value;
 
-    myOutputValue = `Player Card 1 is ${playerCard1.name} of ${playerCard1.suit} <br>
-    Player Card 2 is ${playerCard2.name} of ${playerCard2.suit} <br>
-    <br>
-  Dealer Card 1 is ${dealerCard1.name} of ${dealerCard1.suit} <br>
-  Dealer Card 2 is ${dealerCard2.name} of ${dealerCard2.suit} <br>
-  <br>
-  Player 1 current score is: ${playerScore} <br>
-  Dealer current score is: ${dealerScore}`;
+    //var myOutputValue = `Player Card 1 is ${playerCard1.name} of ${playerCard1.suit} <br>
+    //Player Card 2 is ${playerCard2.name} of ${playerCard2.suit} <br>
+    //<br>
+    //Dealer Card 1 is ${dealerCard1.name} of ${dealerCard1.suit} <br>
+    //Dealer Card 2 is ${dealerCard2.name} of ${dealerCard2.suit} <br>
+    //<br>
+    // Player 1 current score is: ${playerScore} <br>
+    //Dealer current score is: ${dealerScore}`;
+
+    // myOutputValue = showHands();
+
+    var outputMsg = showHands();
+    return outputMsg;
   } else if (input == "hit") {
     var newCard = shuffledDeck.pop();
     playerHand.push(newCard);
@@ -138,15 +177,17 @@ var main = function (input) {
 
     //Check if player went over 21
     if (playerScore > 21) {
-      return "You went bust! sorry, you lost!";
+      return `You went bust! sorry, you lost! <br> <br>
+      Player's Hand: <br>
+      ${playerHand[0].name} of ${playerHand[0].suit} <br>
+      ${playerHand[1].name} of ${playerHand[1].suit} <br>
+      ${playerHand[2].name} of ${playerHand[2].suit} <br><br>
+      Player score is ${playerScore}`;
     }
 
     myOutputValue = `Player additional card is ${newCard.name} of ${newCard.suit} <br>
                     Click Hit again or Stand`;
   } else if (input == "stand") {
-    //var playerTotal = calculatePlayerScore();
-    //var dealerTotal = getDealerScore();
-
     //Dealer need to hit if dealer hand is below 17
     while (dealerScore < 17) {
       var newCard = shuffledDeck.pop();
@@ -172,8 +213,8 @@ var main = function (input) {
       Player WINS! CONGRATULATIONS!`;
     }
 
-    myOutputValue = `Player Score: ${playerTotal} <br>
-    Dealer Score: ${dealerTotal}`;
+    //myOutputValue = `Player Score: ${playerTotal} <br>
+    //Dealer Score: ${dealerTotal}`;
   } else if (input == "reset") {
     playerHand = [];
     dealerHand = [];
@@ -183,6 +224,4 @@ var main = function (input) {
     shuffledDeck = [];
     myOutputValue = "Game has been reset. <br> Please click Start";
   }
-
-  return myOutputValue;
 };
