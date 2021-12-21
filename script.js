@@ -212,25 +212,30 @@ var main = function (input) {
     }
 
     if (dealerScore > 21) {
-      return "Dealer went bust! YOU WIN!";
+      var bustMsg =
+        "Dealer went bust! YOU WIN! <br><br>" +
+        showHands() +
+        "<br>" +
+        showScores();
+      return bustMsg;
     }
 
     if (playerScore == dealerScore) {
-      return "It's a draw!";
+      var drawMsg =
+        "It's a draw! <br><br>" + showHands() + "<br>" + showScores();
+      return drawMsg;
     } else if (playerScore < dealerScore) {
-      return `Player score is ${playerScore} <br>
-      Dealer score is ${dealerScore} <br>
-      <br>
-      Player lost`;
+      var lostMsg =
+        "Player Lost! <br><br>" + showHands() + "<br>" + showScores();
+      return lostMsg;
     } else if (playerScore > dealerScore) {
-      return `Player score is ${playerScore} <br>
-      Dealer score is ${dealerScore} <br>
-      <br>
-      Player WINS! CONGRATULATIONS!`;
+      var winMsg =
+        "Player WINS! CONGRATULATIONS!<br><br>" +
+        showHands() +
+        "<br>" +
+        showScores();
+      return winMsg;
     }
-
-    //myOutputValue = `Player Score: ${playerTotal} <br>
-    //Dealer Score: ${dealerTotal}`;
   } else if (input == "reset") {
     playerHand = [];
     dealerHand = [];
@@ -238,6 +243,7 @@ var main = function (input) {
     dealerScore = 0;
     newDeck = [];
     shuffledDeck = [];
-    myOutputValue = "Game has been reset. <br> Please click Start";
+    var resetMsg = "Game has been reset. <br> Please click Start";
+    return resetMsg;
   }
 };
