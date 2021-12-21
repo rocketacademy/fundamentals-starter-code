@@ -184,7 +184,7 @@ var main = function (input) {
     playerScore = playerCard1.value + playerCard2.value;
     dealerScore = dealerCard1.value + dealerCard2.value;
 
-    var outputMsg = showHands() + "<br>" + showScores();
+    var outputMsg = `${showHands()}<br>${showScores()}`;
     return outputMsg;
   } else if (input == "hit") {
     var newCard = shuffledDeck.pop();
@@ -193,16 +193,16 @@ var main = function (input) {
 
     //Check if player went over 21
     if (playerScore > 21) {
-      return `You went bust! sorry, you lost! <br> <br>
-      Player's Hand: <br>
-      ${playerHand[0].name} of ${playerHand[0].suit} <br>
-      ${playerHand[1].name} of ${playerHand[1].suit} <br>
-      ${playerHand[2].name} of ${playerHand[2].suit} <br><br>
-      Player score is ${playerScore}`;
+      var bustMsg =
+        "You went bust! Sorry You Lost! <br><br>" +
+        showHands() +
+        "<br>" +
+        showScores();
+      return bustMsg;
     }
 
-    myOutputValue = `Player additional card is ${newCard.name} of ${newCard.suit} <br>
-                    Click Hit again or Stand`;
+    var hitMsg = `Player choose to hit <br><br>${showHands()}<br>${showScores()}`;
+    return hitMsg;
   } else if (input == "stand") {
     //Dealer need to hit if dealer hand is below 17
     while (dealerScore < 17) {
