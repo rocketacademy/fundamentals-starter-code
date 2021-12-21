@@ -3,7 +3,7 @@
 //Create a deck of card
 var makeDeck = function () {
   var cardDeck = [];
-  var suits = ["diamonds", "hearts", "clubs", "spades"];
+  var suits = ["Diamonds", "Hearts", "Clubs", "Spades"];
 
   // Loop over the suits array
   var suitIndex = 0;
@@ -20,16 +20,16 @@ var makeDeck = function () {
 
       // If rank is 1, 11, 12, or 13, set cardName to the ace or face card's name
       if (cardName == 1) {
-        cardName = "ace";
+        cardName = "Ace";
         cardValue = 11;
       } else if (cardName == 11) {
-        cardName = "jack";
+        cardName = "Jack";
         cardValue = 10;
       } else if (cardName == 12) {
-        cardName = "queen";
+        cardName = "Queen";
         cardValue = 10;
       } else if (cardName == 13) {
-        cardName = "king";
+        cardName = "King";
         cardValue = 10;
       }
 
