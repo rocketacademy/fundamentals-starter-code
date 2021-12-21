@@ -83,14 +83,16 @@ var shuffleCards = function (cardDeck) {
   return cardDeck;
 };
 
-//Global variables
+// Global variables
 // Store player's hand and dealer's hand in a separate array
+// Initialize playerScore and dealerScore to 0
 var playerHand = [];
 var dealerHand = [];
 var playerScore = 0;
 var dealerScore = 0;
 var newDeck = [];
 var shuffledDeck = [];
+var isThereAce = false;
 
 //Helper function to show player's hand and dealer's hand
 var showHands = function () {
@@ -129,70 +131,97 @@ var showHands = function () {
 //Helper function to show player's score and dealer's score
 var showScores = function () {
   var index = 0;
-  var showPlayerScore = 0;
-  var showDealerScore = 0;
+  playerScore = 0;
+  dealerScore = 0;
 
   while (index < playerHand.length) {
-    showPlayerScore = showPlayerScore + playerHand[index].value;
+    playerScore = playerScore + playerHand[index].value;
     index += 1;
   }
   index = 0;
 
   while (index < dealerHand.length) {
-    showDealerScore = showDealerScore + dealerHand[index].value;
+    dealerScore = dealerScore + dealerHand[index].value;
     index += 1;
   }
   index = 0;
 
   var showScoreMsg =
     "Player score is " +
-    showPlayerScore +
+    playerScore +
     "<br>" +
     "Dealer score is " +
-    showDealerScore;
+    dealerScore;
   return showScoreMsg;
+};
+
+// Helper function to check if there's an Ace in player's Hand
+var checkForAce = function () {
+  var index = 0;
+  while (index < playerHand.length) {
+    if (playerHand[index].name == "ace") {
+      isThereAce = true;
+    }
+    index += 1;
+  }
+  return isThereAce;
+};
+
+// Helper function to count the number of ace in a hand
+var countNoAce = function () {
+  var index = 0;
+  var numOfAce = 0;
+  while (index < playerHand.length) {
+    if (playerHand[index].name == "ace") {
+      numOfAce += 1;
+    }
+    index += 1;
+  }
+  return numOfAce;
 };
 
 var main = function (input) {
   //Start the game
   if (input == "start") {
+    // Create a new deck of cards and shuffle it
     newDeck = makeDeck();
-    console.log(newDeck);
-
     shuffledDeck = shuffleCards(newDeck);
-    console.log(shuffledDeck);
 
     //Deal 2 cards each to player and dealer
     var playerCard1 = shuffledDeck.pop();
     playerHand.push(playerCard1);
-    console.log("Player Card 1: " + playerCard1);
-    console.log("Player Hand: " + playerHand);
 
     var dealerCard1 = shuffledDeck.pop();
     dealerHand.push(dealerCard1);
-    console.log("Dealer Card 1: " + dealerCard1);
-    console.log("Dealer hand: " + dealerHand);
 
     var playerCard2 = shuffledDeck.pop();
     playerHand.push(playerCard2);
-    console.log(playerCard2);
 
     var dealerCard2 = shuffledDeck.pop();
     dealerHand.push(dealerCard2);
-    console.log(dealerCard2);
 
-    playerScore = playerCard1.value + playerCard2.value;
-    dealerScore = dealerCard1.value + dealerCard2.value;
+    //Just to check ace 1 to 11 check function
+
+    // Update player and dealer's score by adding the first 2 cards values
+    //playerScore = playerHand[0].value + playerHand[1].value;
+    //dealerScore = dealerCard1.value + dealerCard2.value;
 
     var outputMsg = `${showHands()}<br>${showScores()}`;
     return outputMsg;
-  } else if (input == "hit") {
+  }
+  // When player hits
+  else if (input == "hit") {
     var newCard = shuffledDeck.pop();
     playerHand.push(newCard);
     playerScore = playerScore + newCard.value;
 
-    //Check if player went over 21
-    if (playerScore > 21) {
+    // Check if player went over 21
+    // if player has an Ace and went bust, Ace counts as 1
+    var playerHasAce = checkForAce();
+    var numOfAce = countNoAce();
+    if (playerScore > 21 && playerHasAce) {
+      playerScore = playerScore - 10 * (numOfAce - 1);
+    } else if (playerScore > 21) {
       var bustMsg =
         "You went bust! Sorry You Lost! <br><br>" +
         showHands() +
@@ -211,6 +240,7 @@ var main = function (input) {
       dealerScore = dealerScore + newCard.value;
     }
 
+    // Check to see if dealer went bust
     if (dealerScore > 21) {
       var bustMsg =
         "Dealer went bust! YOU WIN! <br><br>" +
@@ -220,6 +250,7 @@ var main = function (input) {
       return bustMsg;
     }
 
+    // Conditions for when it's a draw, lost or win
     if (playerScore == dealerScore) {
       var drawMsg =
         "It's a draw! <br><br>" + showHands() + "<br>" + showScores();
