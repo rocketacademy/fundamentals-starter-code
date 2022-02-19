@@ -1,4 +1,11 @@
+var convertKmToMiles = function (km) {
+  return km * 0.62;
+}
+
 var main = function (input) {
-  var myOutputValue = 'hello world';
-  return myOutputValue;
+  if (Number.isNaN(Number(input))) {
+    return 'Please enter a number'
+  }
+  var distanceInMiles = convertKmToMiles(input);
+  return `${input}km is equivalent to ${distanceInMiles} miles.`;
 };
