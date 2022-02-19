@@ -1,4 +1,5 @@
 var main = function (input) {
-  var myOutputValue = 'hello world';
-  return myOutputValue;
+  var distanceInKm = input;
+  var distanceInMiles = distanceInKm * 0.62;
+  return distanceInMiles;
 };
