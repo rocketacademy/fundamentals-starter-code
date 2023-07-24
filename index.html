@@ -26,13 +26,16 @@ The <html> element is known as the root element of a HTML page. All other elemen
       }
 
       #container {
-        background-color: pink;
+        border-radius: 25px;
+        text-align: center;
+        background-color: rgb(132, 206, 236);
         margin: 40px auto;
         max-width: 800px;
         padding: 38px 31px;
       }
 
       input {
+        border-radius: 25px;
         font-size: 21px;
         line-height: 33px;
         margin: 0 0 23px 0;
@@ -41,6 +44,7 @@ The <html> element is known as the root element of a HTML page. All other elemen
       }
 
       button {
+        border-radius: 25px;
         font-size: 21px;
         line-height: 33px;
         margin: 0 0 23px 0;
@@ -48,7 +52,8 @@ The <html> element is known as the root element of a HTML page. All other elemen
       }
 
       #output-div {
-        background-color: lightgrey;
+        border-radius: 25px;
+        background-color: rgb(234, 255, 186);
         margin: 20px auto;
         padding: 20px;
         width: 100%;
@@ -59,18 +64,23 @@ The <html> element is known as the root element of a HTML page. All other elemen
   <!-- The <body> element defines the document's body, and is a container for all the visible contents that will be rendered by the browser.  -->
   <body>
     <!-- The <h1> element defines a large heading. There are 6 pre-set header elements, <h1> to <h6> -->
-    <h1 id="header">SWE Fundamentals! 🚀</h1>
+    <h1 id="header">✊Beat That!✊</h1>
     <!-- The <div> tag defines a division or a section in an HTML document, and is commonly use as a "container" for nested HTML elements. -->
     <div id="container">
       <!-- The <p> tag defines a paragraph element. -->
-      <p>Input:</p>
+      <p><h2>Welcome to Beat That!</h2></p>
+      <p>
+        Please press submit to roll the dice, which will give you 2 numbers.<br>
+        You will be able to create a two-digit number by selecting the order of
+        your dice.<br>
+     The player with the highest number wins!</p>
       <!-- The self-closing <input /> tag represents a field for a user to enter input. -->
       <input id="input-field" />
       <!-- The self-closing <br /> tag represents a line break - a line's worth of spacing before dispalying the next element. -->
       <br />
       <!-- The <button> tag represents.. you guessed it! a button. -->
-      <button id="submit-button">Submit</button>
-      <p>Output:</p>
+      <button id="submit-button">Submit!</button>
+      <p><b>Output:</b></p>
       <div id="output-div"></div>
     </div>
     <!-- Everything below this is incorporating JavaScript programming logic into the webpage. -->
